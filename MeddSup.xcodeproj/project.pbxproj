@@ -31,6 +31,7 @@
 		8044E6DD2E692D3800AB4DEE /* MeddSup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeddSup.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8044E6EE2E692D3900AB4DEE /* MeddSupTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MeddSupTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8044E6F82E692D3900AB4DEE /* MeddSupUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MeddSupUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8048D16F2E974D270059E492 /* LoginModule */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LoginModule; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -80,6 +81,7 @@
 		8044E6D42E692D3800AB4DEE = {
 			isa = PBXGroup;
 			children = (
+				8048D16E2E974C330059E492 /* Modules */,
 				8044E6DF2E692D3800AB4DEE /* MeddSup */,
 				8044E6F12E692D3900AB4DEE /* MeddSupTests */,
 				8044E6FB2E692D3900AB4DEE /* MeddSupUITests */,
@@ -103,6 +105,14 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8048D16E2E974C330059E492 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				8048D16F2E974D270059E492 /* LoginModule */,
+			);
+			path = Modules;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
