@@ -12,7 +12,7 @@ import LoginModule
 struct ContentView: View {
     let routesApi = RouteAPI(baseURL: URL(string: "http://localhost:8080")!)
     
-    @StateObject private var loginViewModel = LoginModule.createLoginViewModel(loginService: LoginModule.createLoginService(baseURL: "http://localhost:8080"))
+    @StateObject private var loginViewModel = LoginModule.createLoginViewModel(baseURL: "http://localhost:8080")
     
     var body: some View {
         Group {

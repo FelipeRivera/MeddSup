@@ -10,13 +10,41 @@ import Foundation
 public class LoginService: @unchecked Sendable {
     private let baseURL: String
     private let session: URLSession
+    private let backgroundQueue = DispatchQueue(label: "com.meddsup.login.service", qos: .userInitiated)
     
     public init(baseURL: String = "http://localhost:8080") {
         self.baseURL = baseURL
-        self.session = URLSession.shared
+        
+        let config = URLSessionConfiguration.default
+        config.timeoutIntervalForRequest = 30
+        config.timeoutIntervalForResource = 60
+        config.httpMaximumConnectionsPerHost = 4
+        config.requestCachePolicy = .reloadIgnoringLocalCacheData
+        
+        self.session = URLSession(configuration: config)
     }
     
     public func login(user: String, password: String) async throws -> LoginResponse {
+        return try await withCheckedThrowingContinuation { continuation in
+            backgroundQueue.async { [weak self] in
+                guard let self = self else {
+                    continuation.resume(throwing: LoginError.networkError("Service deallocated"))
+                    return
+                }
+                
+                Task {
+                    do {
+                        let result = try await self.performLogin(user: user, password: password)
+                        continuation.resume(returning: result)
+                    } catch {
+                        continuation.resume(throwing: error)
+                    }
+                }
+            }
+        }
+    }
+    
+    private func performLogin(user: String, password: String) async throws -> LoginResponse {
         guard let url = URL(string: "\(baseURL)/login") else {
             throw LoginError.networkError("URL inválida")
         }
@@ -27,6 +55,7 @@ public class LoginService: @unchecked Sendable {
         urlRequest.httpMethod = "POST"
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
+        urlRequest.cachePolicy = .reloadIgnoringLocalCacheData
         
         do {
             let jsonData = try JSONEncoder().encode(request)

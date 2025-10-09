@@ -8,8 +8,13 @@
 import SwiftUI
 
 public struct LoginView: View {
-    @StateObject private var viewModel = LoginViewModel()
+    @EnvironmentObject private var viewModel: LoginViewModel
     @State private var showPassword = false
+    @FocusState private var focusedField: Field?
+    
+    enum Field {
+        case email, password
+    }
     
     public init() {}
     
@@ -59,6 +64,11 @@ public struct LoginView: View {
                                 .keyboardType(.emailAddress)
                                 .autocapitalization(.none)
                                 .disableAutocorrection(true)
+                                .focused($focusedField, equals: .email)
+                                .submitLabel(.next)
+                                .onSubmit {
+                                    focusedField = .password
+                                }
                         }
                         
                         // Password field
@@ -78,6 +88,13 @@ public struct LoginView: View {
                                 }
                             }
                             .textFieldStyle(LoginTextFieldStyle())
+                            .focused($focusedField, equals: .password)
+                            .submitLabel(.go)
+                            .onSubmit {
+                                if viewModel.isFormValid {
+                                    viewModel.login()
+                                }
+                            }
                         }
                         
                         // Error message
@@ -86,13 +103,12 @@ public struct LoginView: View {
                                 .font(.system(size: 14, weight: .medium))
                                 .foregroundColor(.red)
                                 .padding(.horizontal)
+                                .transition(.opacity)
                         }
                         
                         // Login button
                         Button(action: {
-                            Task {
-                                await viewModel.login()
-                            }
+                            viewModel.login()
                         }) {
                             HStack {
                                 if viewModel.isLoading {
@@ -138,6 +154,7 @@ public struct LoginView: View {
         .onTapGesture {
             hideKeyboard()
         }
+        .animation(.easeInOut(duration: 0.3), value: viewModel.errorMessage)
     }
 }
 

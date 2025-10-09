@@ -14,11 +14,8 @@ public struct LoginModule {
     }
     
     @MainActor
-    public static func createLoginViewModel(loginService: LoginService? = nil) -> LoginViewModel {
-        if let service = loginService {
-            return LoginViewModel(loginService: service)
-        } else {
-            return LoginViewModel()
-        }
+    public static func createLoginViewModel(baseURL: String = "http://localhost:8080") -> LoginViewModel {
+        let loginService = LoginService(baseURL: baseURL)
+        return LoginViewModel(loginService: loginService)
     }
 }

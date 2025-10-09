@@ -17,32 +17,45 @@ public final class LoginViewModel: ObservableObject {
     @Published public var isLoggedIn: Bool = false
     
     private let loginService: LoginService
+    private var loginTask: Task<Void, Never>?
     
-    public init(loginService: LoginService = LoginService()) {
+    public init(loginService: LoginService) {
         self.loginService = loginService
     }
     
-    public func login() async {
+    public func login() {
+        loginTask?.cancel()
+        
         guard !email.isEmpty && !password.isEmpty else {
             errorMessage = "Por favor completa todos los campos"
             return
         }
         
-        isLoading = true
-        errorMessage = nil
-        
-        do {
-            let response = try await loginService.login(user: email, password: password)
-            UserDefaults.standard.set(response.accessToken, forKey: "access_token")
-            isLoggedIn = true
-        } catch {
-            errorMessage = error.localizedDescription
+        loginTask = Task { @MainActor in
+            isLoading = true
+            errorMessage = nil
+            
+            do {
+                let response = try await loginService.login(user: email, password: password)
+                
+                UserDefaults.standard.set(response.accessToken, forKey: "access_token")
+                isLoggedIn = true
+                
+            } catch {
+                if Task.isCancelled {
+                    return
+                }
+                
+                errorMessage = error.localizedDescription
+            }
+            
+            isLoading = false
         }
-        
-        isLoading = false
     }
     
     public func logout() {
+        loginTask?.cancel()
+        
         UserDefaults.standard.removeObject(forKey: "access_token")
         isLoggedIn = false
         email = ""
@@ -55,5 +68,9 @@ public final class LoginViewModel: ObservableObject {
     
     public var isFormValid: Bool {
         !email.isEmpty && !password.isEmpty && !isLoading
+    }
+    
+    deinit {
+        loginTask?.cancel()
     }
 }
