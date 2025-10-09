@@ -25,7 +25,6 @@ struct SplashScreenView: View {
                 
                 // App Logo/Icon
                 VStack(spacing: 20) {
-                    // Logo placeholder - you can replace with your actual logo
                     RoundedRectangle(cornerRadius: 20)
                         .fill(
                             LinearGradient(
@@ -94,7 +93,6 @@ struct SplashScreenView: View {
 struct DiagonalBackgroundView: View {
     var body: some View {
         ZStack {
-            // Teal section (top-left)
             Rectangle()
                 .fill(
                     LinearGradient(
@@ -107,7 +105,6 @@ struct DiagonalBackgroundView: View {
                     )
                 )
                 .overlay(
-                    // Diagonal lines pattern
                     DiagonalLinesPattern()
                         .opacity(0.3)
                 )
@@ -115,8 +112,6 @@ struct DiagonalBackgroundView: View {
                     TriangleShape()
                         .rotation(.degrees(45))
                 )
-            
-            // Navy blue section (bottom-right)
             Rectangle()
                 .fill(
                     LinearGradient(
