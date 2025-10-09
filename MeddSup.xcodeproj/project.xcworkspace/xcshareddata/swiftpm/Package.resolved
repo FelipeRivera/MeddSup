@@ -1,0 +1,15 @@
+{
+  "originHash" : "c5c2dfa613534b748aa76f1e9378b5b4aec07ac3c2ec2979aceedeccaa96bcd8",
+  "pins" : [
+    {
+      "identity" : "routemapkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/FelipeRivera/RouteMapKit.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "197ad15a3439cf37eeac6e653f85a8a0f9a23e61"
+      }
+    }
+  ],
+  "version" : 3
+}
