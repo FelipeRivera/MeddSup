@@ -41,13 +41,13 @@ public enum LoginError: Sendable, Error, LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .invalidCredentials:
-            return "Credenciales inválidas"
+            return .localized("error.invalid.credentials")
         case .networkError(let message):
-            return "Error de red: \(message)"
+            return .localized("error.network", arguments: message)
         case .invalidResponse:
-            return "Respuesta inválida del servidor"
+            return .localized("error.invalid.response")
         case .decodingError:
-            return "Error al procesar la respuesta"
+            return .localized("error.decoding")
         }
     }
 }

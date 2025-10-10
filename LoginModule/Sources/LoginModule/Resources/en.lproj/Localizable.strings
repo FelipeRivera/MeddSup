@@ -1,0 +1,25 @@
+/* 
+  Localizable.strings
+  LoginModule
+
+  Created by Felipe Rivera on 3/09/25.
+*/
+
+// MARK: - UI Labels
+"login.header.title" = "Login";
+"app.title" = "MeddiSuply";
+"email.placeholder" = "Email";
+"password.placeholder" = "Password";
+"login.button.title" = "Sign In";
+"register.button.title" = "Sign Up";
+"forgot.password.button.title" = "Forgot your password?";
+
+// MARK: - Error Messages
+"error.validation.empty.fields" = "Please complete all fields";
+"error.invalid.credentials" = "Invalid credentials";
+"error.network" = "Network error: %@";
+"error.invalid.response" = "Invalid server response";
+"error.decoding" = "Error processing response";
+"error.service.deallocated" = "Service deallocated";
+"error.invalid.url" = "Invalid URL";
+"error.server" = "Server error: %d";

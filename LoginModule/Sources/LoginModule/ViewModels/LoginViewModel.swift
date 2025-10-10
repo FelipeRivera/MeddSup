@@ -27,7 +27,7 @@ public final class LoginViewModel: ObservableObject {
         loginTask?.cancel()
         
         guard !email.isEmpty && !password.isEmpty else {
-            errorMessage = "Por favor completa todos los campos"
+            errorMessage = .localized("error.validation.empty.fields")
             return
         }
         

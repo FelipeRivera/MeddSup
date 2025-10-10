@@ -28,7 +28,7 @@ public class LoginService: @unchecked Sendable {
         return try await withCheckedThrowingContinuation { continuation in
             backgroundQueue.async { [weak self] in
                 guard let self = self else {
-                    continuation.resume(throwing: LoginError.networkError("Service deallocated"))
+                    continuation.resume(throwing: LoginError.networkError(.localized("error.service.deallocated")))
                     return
                 }
                 
@@ -46,7 +46,7 @@ public class LoginService: @unchecked Sendable {
     
     private func performLogin(user: String, password: String) async throws -> LoginResponse {
         guard let url = URL(string: "\(baseURL)/login") else {
-            throw LoginError.networkError("URL inválida")
+            throw LoginError.networkError(.localized("error.invalid.url"))
         }
         
         let request = LoginRequest(user: user, password: password)
@@ -82,7 +82,7 @@ public class LoginService: @unchecked Sendable {
             case 401:
                 throw LoginError.invalidCredentials
             default:
-                throw LoginError.networkError("Error del servidor: \(httpResponse.statusCode)")
+                throw LoginError.networkError(.localized("error.server", arguments: httpResponse.statusCode))
             }
         } catch let error as LoginError {
             throw error

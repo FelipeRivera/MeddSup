@@ -11,18 +11,19 @@ public struct LoginView: View {
     @EnvironmentObject private var viewModel: LoginViewModel
     @State private var showPassword = false
     @FocusState private var focusedField: Field?
-    
+    @State private var localizationVersion = 0 // increments to force view refresh on language change
+
     enum Field {
         case email, password
     }
-    
+
     public init() {}
-    
+
     public var body: some View {
         ZStack {
             DiagonalBackgroundView()
                 .ignoresSafeArea()
-            
+
             VStack(spacing: 0) {
                 // Header
                 VStack(spacing: 0) {
@@ -32,17 +33,17 @@ public struct LoginView: View {
                         .frame(height: 60)
                         .overlay(
                             HStack {
-                                Text("Inicio de sesión en Login")
+                                Text(String.localized("login.header.title"))
                                     .font(.system(size: 16, weight: .medium))
                                     .foregroundColor(.white)
                                 Spacer()
                             }
                                 .padding(.horizontal, 20)
                         )
-                    
+
                     // App title
                     VStack(spacing: 8) {
-                        Text("MeddiSuply")
+                        Text(String.localized("app.title"))
                             .font(.system(size: 28, weight: .bold, design: .rounded))
                             .foregroundColor(.black)
                     }
@@ -50,16 +51,16 @@ public struct LoginView: View {
                     .frame(maxWidth: .infinity)
                     .background(Color.gray.opacity(0.1))
                 }
-                
+
                 // Main content area
                 VStack(spacing: 30) {
                     Spacer()
-                    
+
                     // Login form
                     VStack(spacing: 20) {
                         // Email field
                         VStack(alignment: .leading, spacing: 8) {
-                            TextField("Correo Electrónico", text: $viewModel.email)
+                            TextField(String.localized("email.placeholder"), text: $viewModel.email)
                                 .textFieldStyle(LoginTextFieldStyle())
                                 .keyboardType(.emailAddress)
                                 .autocapitalization(.none)
@@ -70,16 +71,16 @@ public struct LoginView: View {
                                     focusedField = .password
                                 }
                         }
-                        
+
                         // Password field
                         VStack(alignment: .leading, spacing: 8) {
                             HStack {
                                 if showPassword {
-                                    TextField("Contraseña", text: $viewModel.password)
+                                    TextField(String.localized("password.placeholder"), text: $viewModel.password)
                                 } else {
-                                    SecureField("Contraseña", text: $viewModel.password)
+                                    SecureField(String.localized("password.placeholder"), text: $viewModel.password)
                                 }
-                                
+
                                 Button(action: {
                                     showPassword.toggle()
                                 }) {
@@ -96,7 +97,7 @@ public struct LoginView: View {
                                 }
                             }
                         }
-                        
+
                         // Error message
                         if let errorMessage = viewModel.errorMessage {
                             Text(errorMessage)
@@ -105,7 +106,7 @@ public struct LoginView: View {
                                 .padding(.horizontal)
                                 .transition(.opacity)
                         }
-                        
+
                         // Login button
                         Button(action: {
                             viewModel.login()
@@ -116,7 +117,7 @@ public struct LoginView: View {
                                         .progressViewStyle(CircularProgressViewStyle(tint: .white))
                                         .scaleEffect(0.8)
                                 } else {
-                                    Text("Iniciar Sesión")
+                                    Text(String.localized("login.button.title"))
                                         .font(.system(size: 16, weight: .semibold))
                                 }
                             }
@@ -132,15 +133,16 @@ public struct LoginView: View {
                     .padding(.horizontal, 30)
                     Spacer()
                     HStack {
-                        Button("Registrarse") {
-                            
+                        Button(action: {}) {
+                            Text(String.localized("register.button.title"))
                         }
                         .font(.system(size: 16, weight: .medium))
                         .foregroundColor(.black)
-                        
+
                         Spacer()
-                        
-                        Button("¿Olvidó su contraseña?") {
+
+                        Button(action: {}) {
+                            Text(String.localized("forgot.password.button.title"))
                         }
                         .font(.system(size: 16, weight: .medium))
                         .foregroundColor(.black)
@@ -150,6 +152,10 @@ public struct LoginView: View {
                 }
                 .background(Color.gray.opacity(0.05))
             }
+        }
+        .id(localizationVersion) // force view identity change when language changes
+        .onReceive(NotificationCenter.default.publisher(for: .LocalizationDidChange)) { _ in
+            localizationVersion += 1
         }
         .onTapGesture {
             hideKeyboard()
@@ -222,7 +228,7 @@ struct DiagonalLinesPattern: View {
                 let width = geometry.size.width
                 let height = geometry.size.height
                 let spacing: CGFloat = 8
-                
+
                 for i in stride(from: -width, through: width + height, by: spacing) {
                     path.move(to: CGPoint(x: i, y: 0))
                     path.addLine(to: CGPoint(x: i + height, y: height))
