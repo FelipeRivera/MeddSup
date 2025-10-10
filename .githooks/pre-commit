@@ -1,0 +1,7 @@
+#!/bin/sh
+# Prevent accidental commits of Firebase plist
+if git diff --cached --name-only | grep -q '^MeddSup/GoogleService-Info.plist$'; then
+  echo 'Error: MeddSup/GoogleService-Info.plist must not be committed. Remove it from staging and add it to .gitignore.' >&2
+  exit 1
+fi
+exit 0
