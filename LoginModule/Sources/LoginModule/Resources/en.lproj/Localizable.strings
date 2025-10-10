@@ -23,3 +23,5 @@
 "error.service.deallocated" = "Service deallocated";
 "error.invalid.url" = "Invalid URL";
 "error.server" = "Server error: %d";
+"error.validation.invalid.email" = "Please enter a valid email address.";
+"error.validation.password.too.short" = "Password must be at least 8 characters.";

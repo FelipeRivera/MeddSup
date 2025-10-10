@@ -13,6 +13,7 @@ public final class LoginViewModel: ObservableObject {
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var isLoading: Bool = false
+    @Published var errorKey: String?
     @Published var errorMessage: String?
     @Published public var isLoggedIn: Bool = false
     
@@ -26,17 +27,36 @@ public final class LoginViewModel: ObservableObject {
     public func login() {
         loginTask?.cancel()
         
-        guard !email.isEmpty && !password.isEmpty else {
-            errorMessage = .localized("error.validation.empty.fields")
+        // Trim email
+        let trimmedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        // Validation
+        guard !trimmedEmail.isEmpty && !password.isEmpty else {
+            errorKey = "error.validation.empty.fields"
+            errorMessage = nil
             return
         }
         
+        guard isValidEmail(trimmedEmail) else {
+            errorKey = "error.validation.invalid.email"
+            errorMessage = nil
+            return
+        }
+        
+        guard password.count >= 8 else {
+            errorKey = "error.validation.password.too.short"
+            errorMessage = nil
+            return
+        }
+        
+        errorKey = nil
+        errorMessage = nil
+        
         loginTask = Task { @MainActor in
             isLoading = true
-            errorMessage = nil
             
             do {
-                let response = try await loginService.login(user: email, password: password)
+                let response = try await loginService.login(user: trimmedEmail, password: password)
                 
                 UserDefaults.standard.set(response.accessToken, forKey: "access_token")
                 isLoggedIn = true
@@ -47,6 +67,7 @@ public final class LoginViewModel: ObservableObject {
                 }
                 
                 errorMessage = error.localizedDescription
+                errorKey = nil
             }
             
             isLoading = false
@@ -63,14 +84,23 @@ public final class LoginViewModel: ObservableObject {
     }
     
     public func clearError() {
+        errorKey = nil
         errorMessage = nil
     }
     
     public var isFormValid: Bool {
-        !email.isEmpty && !password.isEmpty && !isLoading
+        let trimmedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
+        return !trimmedEmail.isEmpty && !password.isEmpty && !isLoading
     }
     
     deinit {
         loginTask?.cancel()
+    }
+    
+    // MARK: - Validation helpers
+    private func isValidEmail(_ email: String) -> Bool {
+        let pattern = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}$"
+        let predicate = NSPredicate(format: "SELF MATCHES[c] %@", pattern)
+        return predicate.evaluate(with: email)
     }
 }

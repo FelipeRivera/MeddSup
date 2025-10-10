@@ -1,4 +1,4 @@
-/* 
+/*
   Localizable.strings
   LoginModule
 
@@ -6,7 +6,7 @@
 */
 
 // MARK: - UI Labels
-"login.header.title" = "Inicio de sesión en Login";
+"login.header.title" = "Inicio de sesión";
 "app.title" = "MeddiSuply";
 "email.placeholder" = "Correo Electrónico";
 "password.placeholder" = "Contraseña";
@@ -23,3 +23,5 @@
 "error.service.deallocated" = "Servicio desasignado";
 "error.invalid.url" = "URL inválida";
 "error.server" = "Error del servidor: %d";
+"error.validation.invalid.email" = "Por favor ingresa un correo electrónico válido.";
+"error.validation.password.too.short" = "La contraseña debe tener al menos 8 caracteres.";
