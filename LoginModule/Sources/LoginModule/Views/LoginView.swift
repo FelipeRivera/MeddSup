@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import UIKit
 
 @available(iOS 15.0, *)
 public struct LoginView: View {
@@ -168,7 +167,7 @@ public struct LoginView: View {
             }
         }
         .onTapGesture {
-            hideKeyboard()
+            focusedField = nil
         }
         .animation(.easeInOut(duration: 0.3), value: viewModel.errorMessage)
     }
@@ -261,12 +260,6 @@ struct TriangleShape: Shape {
 }
 
 
-// MARK: - Helper Functions
-extension View {
-    func hideKeyboard() {
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-    }
-}
 
 #Preview {
     LoginView()

@@ -6,9 +6,6 @@
 //
 
 import Foundation
-#if canImport(UIKit)
-import UIKit
-#endif
 
 public extension Notification.Name {
     static let LocalizationDidChange = Notification.Name("LoginModule.LocalizationDidChange")
@@ -24,9 +21,6 @@ public final class LocalizationHelper: @unchecked Sendable {
     private init() {
         updateFromSystemPreferences()
         NotificationCenter.default.addObserver(self, selector: #selector(systemPreferencesChanged), name: NSLocale.currentLocaleDidChangeNotification, object: nil)
-#if canImport(UIKit)
-        NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
-#endif
     }
     
     @objc private func systemPreferencesChanged() {
@@ -35,15 +29,6 @@ public final class LocalizationHelper: @unchecked Sendable {
             NotificationCenter.default.post(name: .LocalizationDidChange, object: currentLanguage)
         }
     }
-    
-#if canImport(UIKit)
-    @objc private func appDidBecomeActive() {
-        if currentLanguage == nil {
-            updateFromSystemPreferences()
-            NotificationCenter.default.post(name: .LocalizationDidChange, object: currentLanguage)
-        }
-    }
-#endif
     
     private func updateFromSystemPreferences() {
         let preferred = Locale.preferredLanguages
@@ -63,6 +48,7 @@ public final class LocalizationHelper: @unchecked Sendable {
                 break
             }
         }
+        
         if !found {
             languageBundle = Bundle.module
             currentLanguage = nil
