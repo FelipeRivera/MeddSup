@@ -1,0 +1,38 @@
+name: CI Tests
+
+on:
+  pull_request:
+    branches: [ main, develop ]
+  push:
+    branches: [ main, develop ]
+
+jobs:
+  test-login-module:
+    name: Test LoginModule
+    runs-on: macos-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Xcode
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: latest-stable
+        
+    - name: Cache Swift Package Manager
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cache/org.swift.swiftpm
+          ~/Library/Caches/org.swift.swiftpm
+          .build
+        key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+        restore-keys: |
+          ${{ runner.os }}-spm-
+          
+    - name: Test LoginModule
+      run: |
+        cd LoginModule
+        rm -rf .build
+        xcodebuild test -scheme LoginModule -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.6'
