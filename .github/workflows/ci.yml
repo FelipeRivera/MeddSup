@@ -2,7 +2,7 @@ name: iOS CI — App & SPM (iOS 15+)
 
 on:
   pull_request:
-    branches: [ main, develop ]
+    branches: [ "**" ]
   push:
     branches: [ main, develop ]
   workflow_dispatch:
@@ -12,11 +12,16 @@ concurrency:
   cancel-in-progress: true
 
 env:
+  # Usamos solución B: sin "name=", que Xcode resuelva el simulador
+  IOS_DEST: "platform=iOS Simulator,OS=latest"
   DERIVED_DATA: ${{ runner.temp }}/DerivedData
   RESULT_BUNDLE: ${{ runner.temp }}/TestResults.xcresult
-  IOS_DEST: "platform=iOS Simulator,name=iPhone 15,OS=latest"
-  IOS_APP_SCHEME: "MeddSup"           # <— si tu scheme tiene otro nombre, cámbialo aquí
-  LOGINMODULE_PATH: "LoginModule"     # <— ruta al Package.swift del módulo
+
+  # Ajusta el nombre del scheme de la app si es distinto
+  IOS_APP_SCHEME: "MeddSup"
+
+  # Ruta al Package.swift del módulo SPM (LoginModule)
+  LOGINMODULE_PATH: "LoginModule"
 
 jobs:
   loginmodule-tests:
@@ -51,18 +56,10 @@ jobs:
           xcodebuild -list -json -package-path "${LOGINMODULE_PATH}" > schemes.json
           cat schemes.json
 
-      - name: Boot iOS Simulator
-        run: |
-          xcrun simctl bootstatus booted || {
-            ID=$(xcrun simctl create "CI-iPhone" "iPhone 15" "latest")
-            xcrun simctl boot "$ID"
-            xcrun simctl bootstatus "$ID"
-          }
-
-      - name: Test SPM package on iOS
+      # No imponemos un device concreto; Xcode elegirá uno con OS=latest
+      - name: xcodebuild test (SPM package on iOS)
         run: |
           set -e
-          # Tomamos todos los schemes del package y ejecutamos test en simulador
           SCHEMES=$(python3 - <<'PY'
 import json
 d=json.load(open('schemes.json'))
@@ -142,14 +139,6 @@ PY
             echo "::error::No .xcworkspace or .xcodeproj found at repo root"
             exit 1
           fi
-
-      - name: Boot iOS Simulator
-        run: |
-          xcrun simctl bootstatus booted || {
-            ID=$(xcrun simctl create "CI-iPhone" "iPhone 15" "latest")
-            xcrun simctl boot "$ID"
-            xcrun simctl bootstatus "$ID"
-          }
 
       - name: xcodebuild test (App)
         run: |
@@ -244,4 +233,3 @@ PY
               -derivedDataPath "${DERIVED_DATA}" \
               CODE_SIGNING_ALLOWED=NO build | xcpretty && exit ${PIPESTATUS[0]}
           fi
-
