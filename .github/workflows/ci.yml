@@ -35,4 +35,4 @@ jobs:
       run: |
         cd LoginModule
         rm -rf .build
-        swift test --build-path .build --configuration debug
+        swift test --build-path .build --destination 'platform=iOS Simulator,name=iPhone 16,OS=18.6'
