@@ -35,4 +35,5 @@ jobs:
       run: |
         cd LoginModule
         rm -rf .build
-        swift test --build-path .build -Xswiftc -target -Xswiftc arm64-apple-ios15.0-simulator
+        swift package generate-xcodeproj
+        xcodebuild test -project LoginModule.xcodeproj -scheme LoginModule -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.6'
