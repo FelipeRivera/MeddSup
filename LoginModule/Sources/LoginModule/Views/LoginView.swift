@@ -8,7 +8,7 @@
 import SwiftUI
 import UIKit
 
-@available(iOS 15.0, macOS 10.15, *)
+@available(iOS 15.0, *)
 public struct LoginView: View {
     @EnvironmentObject private var viewModel: LoginViewModel
     @State private var showPassword = false

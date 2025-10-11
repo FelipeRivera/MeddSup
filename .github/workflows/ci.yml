@@ -34,7 +34,7 @@ jobs:
     - name: Test LoginModule
       run: |
         cd LoginModule
-        swift test --build-path .build
+        swift test --build-path .build -Xswiftc -target -Xswiftc arm64-apple-ios15.0-simulator
         
   test-main-app:
     name: Test Main App
@@ -59,6 +59,7 @@ jobs:
           
     - name: Test Main App
       run: |
+        export CI=true
         xcodebuild test \
           -project MeddSup.xcodeproj \
           -scheme MeddSup \
@@ -93,6 +94,7 @@ jobs:
           
     - name: Build App
       run: |
+        export CI=true
         xcodebuild build \
           -project MeddSup.xcodeproj \
           -scheme MeddSup \
