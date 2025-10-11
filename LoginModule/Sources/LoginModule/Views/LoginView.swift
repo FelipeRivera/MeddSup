@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 @available(iOS 15.0, macOS 10.15, *)
 public struct LoginView: View {

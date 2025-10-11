@@ -12,8 +12,11 @@ import FirebaseCrashlytics
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        FirebaseApp.configure()
-        Crashlytics.crashlytics().setCrashlyticsCollectionEnabled(true)
+        if Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist") != nil {
+            FirebaseApp.configure()
+            Crashlytics.crashlytics().setCrashlyticsCollectionEnabled(true)
+        }
+        
         return true
     }
 }
