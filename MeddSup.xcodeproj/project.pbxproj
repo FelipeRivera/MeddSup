@@ -7,11 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		803C443D2E98A5A90074DAAF /* FirebaseAI in Frameworks */ = {isa = PBXBuildFile; productRef = 803C443C2E98A5A90074DAAF /* FirebaseAI */; };
 		803C443F2E98A5A90074DAAF /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 803C443E2E98A5A90074DAAF /* FirebaseAnalytics */; };
 		803C44412E98A5A90074DAAF /* FirebaseAnalyticsCore in Frameworks */ = {isa = PBXBuildFile; productRef = 803C44402E98A5A90074DAAF /* FirebaseAnalyticsCore */; };
-		803C44432E98A5A90074DAAF /* FirebaseAnalyticsIdentitySupport in Frameworks */ = {isa = PBXBuildFile; productRef = 803C44422E98A5A90074DAAF /* FirebaseAnalyticsIdentitySupport */; };
-		803C44452E98A5A90074DAAF /* FirebaseAppDistribution-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 803C44442E98A5A90074DAAF /* FirebaseAppDistribution-Beta */; };
 		803C44472E98A5A90074DAAF /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 803C44462E98A5A90074DAAF /* FirebaseCrashlytics */; };
 		803C44492E98A5A90074DAAF /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = 803C44482E98A5A90074DAAF /* FirebasePerformance */; };
 		8044E70E2E692DDD00AB4DEE /* RouteMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8044E70D2E692DDD00AB4DEE /* RouteMapKit */; };
@@ -66,16 +63,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				803C44452E98A5A90074DAAF /* FirebaseAppDistribution-Beta in Frameworks */,
 				8048D1752E9751CB0059E492 /* LoginModule in Frameworks */,
 				803C44492E98A5A90074DAAF /* FirebasePerformance in Frameworks */,
 				8044E70E2E692DDD00AB4DEE /* RouteMapKit in Frameworks */,
-				803C44432E98A5A90074DAAF /* FirebaseAnalyticsIdentitySupport in Frameworks */,
 				803C44412E98A5A90074DAAF /* FirebaseAnalyticsCore in Frameworks */,
 				80E112C22E99E33700819086 /* FirebaseCore in Frameworks */,
 				803C44472E98A5A90074DAAF /* FirebaseCrashlytics in Frameworks */,
 				803C443F2E98A5A90074DAAF /* FirebaseAnalytics in Frameworks */,
-				803C443D2E98A5A90074DAAF /* FirebaseAI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -155,11 +149,8 @@
 			packageProductDependencies = (
 				8044E70D2E692DDD00AB4DEE /* RouteMapKit */,
 				8048D1742E9751CB0059E492 /* LoginModule */,
-				803C443C2E98A5A90074DAAF /* FirebaseAI */,
 				803C443E2E98A5A90074DAAF /* FirebaseAnalytics */,
 				803C44402E98A5A90074DAAF /* FirebaseAnalyticsCore */,
-				803C44422E98A5A90074DAAF /* FirebaseAnalyticsIdentitySupport */,
-				803C44442E98A5A90074DAAF /* FirebaseAppDistribution-Beta */,
 				803C44462E98A5A90074DAAF /* FirebaseCrashlytics */,
 				803C44482E98A5A90074DAAF /* FirebasePerformance */,
 				80E112C12E99E33700819086 /* FirebaseCore */,
@@ -665,11 +656,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		803C443C2E98A5A90074DAAF /* FirebaseAI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 803C443B2E98A5A90074DAAF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAI;
-		};
 		803C443E2E98A5A90074DAAF /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 803C443B2E98A5A90074DAAF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
@@ -679,16 +665,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 803C443B2E98A5A90074DAAF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalyticsCore;
-		};
-		803C44422E98A5A90074DAAF /* FirebaseAnalyticsIdentitySupport */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 803C443B2E98A5A90074DAAF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalyticsIdentitySupport;
-		};
-		803C44442E98A5A90074DAAF /* FirebaseAppDistribution-Beta */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 803C443B2E98A5A90074DAAF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = "FirebaseAppDistribution-Beta";
 		};
 		803C44462E98A5A90074DAAF /* FirebaseCrashlytics */ = {
 			isa = XCSwiftPackageProductDependency;
