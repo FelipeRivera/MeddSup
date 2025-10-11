@@ -34,7 +34,7 @@ jobs:
     - name: Test LoginModule
       run: |
         cd LoginModule
-        swift test --build-path .build --destination 'platform=iOS Simulator,name=Any iOS Simulator Device,OS=latest'
+        swift test --build-path .build
         
   test-main-app:
     name: Test Main App
@@ -62,7 +62,7 @@ jobs:
         xcodebuild test \
           -project MeddSup.xcodeproj \
           -scheme MeddSup \
-          -destination 'platform=iOS Simulator,name=Any iOS Simulator Device,OS=latest' \
+          -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.6' \
           -enableCodeCoverage YES \
           -quiet
           
@@ -92,5 +92,5 @@ jobs:
         xcodebuild build \
           -project MeddSup.xcodeproj \
           -scheme MeddSup \
-          -destination 'platform=iOS Simulator,name=Any iOS Simulator Device,OS=latest' \
+          -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.6' \
           -quiet
