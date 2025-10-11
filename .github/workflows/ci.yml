@@ -2,9 +2,12 @@ name: iOS CI — App & SPM (iOS 15+)
 
 on:
   pull_request:
-    branches: [ main, develop ]
+    branches:
+      - '**'
   push:
-    branches: [ main, develop ]
+    branches:
+      - main
+      - develop
   workflow_dispatch:
 
 concurrency:
@@ -12,16 +15,11 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  # Usamos solución B: sin "name=", que Xcode resuelva el simulador
-  IOS_DEST: "platform=iOS Simulator,OS=latest"
+  IOS_DEST: platform=iOS Simulator,OS=latest
   DERIVED_DATA: ${{ runner.temp }}/DerivedData
   RESULT_BUNDLE: ${{ runner.temp }}/TestResults.xcresult
-
-  # Ajusta el nombre del scheme de la app si es distinto
-  IOS_APP_SCHEME: "MeddSup"
-
-  # Ruta al Package.swift del módulo SPM (LoginModule)
-  LOGINMODULE_PATH: "LoginModule"
+  IOS_APP_SCHEME: MeddSup          # <-- Cambia si tu scheme es otro
+  LOGINMODULE_PATH: LoginModule    # <-- Carpeta donde está el Package.swift del módulo
 
 jobs:
   loginmodule-tests:
@@ -51,30 +49,32 @@ jobs:
             ${{ runner.os }}-spm-
 
       - name: List SPM Schemes
-        id: list_schemes
         run: |
           xcodebuild -list -json -package-path "${LOGINMODULE_PATH}" > schemes.json
-          cat schemes.json
+          python3 - <<'PY'
+import json
+d=json.load(open('schemes.json'))
+schemes=d.get('workspace',{}).get('schemes',[])
+print("Schemes:", schemes)
+if not schemes:
+    raise SystemExit(1)
+PY
 
-      # No imponemos un device concreto; Xcode elegirá uno con OS=latest
       - name: xcodebuild test (SPM package on iOS)
         run: |
-          set -e
+          set -euo pipefail
           SCHEMES=$(python3 - <<'PY'
 import json
 d=json.load(open('schemes.json'))
-print("\n".join(d.get("workspace",{}).get("schemes",[])))
+for s in d.get('workspace',{}).get('schemes',[]):
+    print(s)
 PY
 )
-          if [ -z "$SCHEMES" ]; then
-            echo "::error::No SPM schemes found for ${LOGINMODULE_PATH}. Ensure tests target exists."
-            exit 1
-          fi
-
           EXITCODE=0
           while IFS= read -r S; do
             [ -z "$S" ] && continue
             echo "→ Testing SPM scheme: $S"
+            set -o pipefail
             xcodebuild -scheme "$S" \
               -package-path "${LOGINMODULE_PATH}" \
               -destination "${IOS_DEST}" \
@@ -82,9 +82,7 @@ PY
               -derivedDataPath "${DERIVED_DATA}" \
               -resultBundlePath "${RESULT_BUNDLE}" \
               -enableCodeCoverage YES \
-              CODE_SIGNING_ALLOWED=NO test | xcpretty
-            CODE=${PIPESTATUS[0]}
-            if [ $CODE -ne 0 ]; then EXITCODE=$CODE; fi
+              CODE_SIGNING_ALLOWED=NO test | xcpretty || EXITCODE=$?
           done <<< "$SCHEMES"
           exit $EXITCODE
 
@@ -102,7 +100,7 @@ PY
   app-tests:
     name: App iOS • Tests (Simulator)
     runs-on: macos-latest
-    needs: [loginmodule-tests]
+    needs: loginmodule-tests
 
     steps:
       - name: Checkout
@@ -129,6 +127,7 @@ PY
       - name: Detect .xcworkspace / .xcodeproj
         id: locate
         run: |
+          set -e
           WORKSPACE=$(ls -1 *.xcworkspace 2>/dev/null | head -n1 || true)
           PROJECT=$(ls -1 *.xcodeproj 2>/dev/null | head -n1 || true)
           if [ -n "$WORKSPACE" ]; then
@@ -136,32 +135,35 @@ PY
           elif [ -n "$PROJECT" ]; then
             echo "project=$PROJECT" >> "$GITHUB_OUTPUT"
           else
-            echo "::error::No .xcworkspace or .xcodeproj found at repo root"
+            echo "No .xcworkspace or .xcodeproj found at repo root"
             exit 1
           fi
 
-      - name: xcodebuild test (App)
+      - name: xcodebuild test (App via workspace)
+        if: ${{ steps.locate.outputs.workspace != '' }}
         run: |
-          set -e
-          if [ -n "${{ steps.locate.outputs.workspace }}" ]; then
-            xcodebuild -workspace "${{ steps.locate.outputs.workspace }}" \
-              -scheme "${IOS_APP_SCHEME}" \
-              -destination "${IOS_DEST}" \
-              -configuration Debug \
-              -derivedDataPath "${DERIVED_DATA}" \
-              -resultBundlePath "${RESULT_BUNDLE}" \
-              -enableCodeCoverage YES \
-              CODE_SIGNING_ALLOWED=NO test | xcpretty && exit ${PIPESTATUS[0]}
-          else
-            xcodebuild -project "${{ steps.locate.outputs.project }}" \
-              -scheme "${IOS_APP_SCHEME}" \
-              -destination "${IOS_DEST}" \
-              -configuration Debug \
-              -derivedDataPath "${DERIVED_DATA}" \
-              -resultBundlePath "${RESULT_BUNDLE}" \
-              -enableCodeCoverage YES \
-              CODE_SIGNING_ALLOWED=NO test | xcpretty && exit ${PIPESTATUS[0]}
-          fi
+          set -euo pipefail
+          xcodebuild -workspace "${{ steps.locate.outputs.workspace }}" \
+            -scheme "${IOS_APP_SCHEME}" \
+            -destination "${IOS_DEST}" \
+            -configuration Debug \
+            -derivedDataPath "${DERIVED_DATA}" \
+            -resultBundlePath "${RESULT_BUNDLE}" \
+            -enableCodeCoverage YES \
+            CODE_SIGNING_ALLOWED=NO test | xcpretty
+
+      - name: xcodebuild test (App via project)
+        if: ${{ steps.locate.outputs.workspace == '' && steps.locate.outputs.project != '' }}
+        run: |
+          set -euo pipefail
+          xcodebuild -project "${{ steps.locate.outputs.project }}" \
+            -scheme "${IOS_APP_SCHEME}" \
+            -destination "${IOS_DEST}" \
+            -configuration Debug \
+            -derivedDataPath "${DERIVED_DATA}" \
+            -resultBundlePath "${RESULT_BUNDLE}" \
+            -enableCodeCoverage YES \
+            CODE_SIGNING_ALLOWED=NO test | xcpretty
 
       - name: Upload artifacts (App)
         if: always()
@@ -177,7 +179,7 @@ PY
   build-app:
     name: App iOS • Build (Debug)
     runs-on: macos-latest
-    needs: [app-tests]
+    needs: app-tests
 
     steps:
       - name: Checkout
@@ -204,6 +206,7 @@ PY
       - name: Detect .xcworkspace / .xcodeproj
         id: locate
         run: |
+          set -e
           WORKSPACE=$(ls -1 *.xcworkspace 2>/dev/null | head -n1 || true)
           PROJECT=$(ls -1 *.xcodeproj 2>/dev/null | head -n1 || true)
           if [ -n "$WORKSPACE" ]; then
@@ -211,25 +214,28 @@ PY
           elif [ -n "$PROJECT" ]; then
             echo "project=$PROJECT" >> "$GITHUB_OUTPUT"
           else
-            echo "::error::No .xcworkspace or .xcodeproj found at repo root"
+            echo "No .xcworkspace or .xcodeproj found at repo root"
             exit 1
           fi
 
-      - name: xcodebuild build (App)
+      - name: xcodebuild build (App via workspace)
+        if: ${{ steps.locate.outputs.workspace != '' }}
         run: |
-          set -e
-          if [ -n "${{ steps.locate.outputs.workspace }}" ]; then
-            xcodebuild -workspace "${{ steps.locate.outputs.workspace }}" \
-              -scheme "${IOS_APP_SCHEME}" \
-              -destination "${IOS_DEST}" \
-              -configuration Debug \
-              -derivedDataPath "${DERIVED_DATA}" \
-              CODE_SIGNING_ALLOWED=NO build | xcpretty && exit ${PIPESTATUS[0]}
-          else
-            xcodebuild -project "${{ steps.locate.outputs.project }}" \
-              -scheme "${IOS_APP_SCHEME}" \
-              -destination "${IOS_DEST}" \
-              -configuration Debug \
-              -derivedDataPath "${DERIVED_DATA}" \
-              CODE_SIGNING_ALLOWED=NO build | xcpretty && exit ${PIPESTATUS[0]}
-          fi
+          set -euo pipefail
+          xcodebuild -workspace "${{ steps.locate.outputs.workspace }}" \
+            -scheme "${IOS_APP_SCHEME}" \
+            -destination "${IOS_DEST}" \
+            -configuration Debug \
+            -derivedDataPath "${DERIVED_DATA}" \
+            CODE_SIGNING_ALLOWED=NO build | xcpretty
+
+      - name: xcodebuild build (App via project)
+        if: ${{ steps.locate.outputs.workspace == '' && steps.locate.outputs.project != '' }}
+        run: |
+          set -euo pipefail
+          xcodebuild -project "${{ steps.locate.outputs.project }}" \
+            -scheme "${IOS_APP_SCHEME}" \
+            -destination "${IOS_DEST}" \
+            -configuration Debug \
+            -derivedDataPath "${DERIVED_DATA}" \
+            CODE_SIGNING_ALLOWED=NO build | xcpretty
