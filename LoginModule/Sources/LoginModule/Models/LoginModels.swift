@@ -40,7 +40,6 @@ public struct LoginResponse: Sendable, Codable {
         self.tokenType = tokenType
     }
 
-    // Convenience computed property for expiration date (now + expiresIn)
     public var expirationDate: Date? {
         guard let expiresIn = expiresIn else { return nil }
         return Date().addingTimeInterval(TimeInterval(expiresIn))

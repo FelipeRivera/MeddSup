@@ -16,6 +16,7 @@
 		803C44492E98A5A90074DAAF /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = 803C44482E98A5A90074DAAF /* FirebasePerformance */; };
 		8044E70E2E692DDD00AB4DEE /* RouteMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8044E70D2E692DDD00AB4DEE /* RouteMapKit */; };
 		8048D1752E9751CB0059E492 /* LoginModule in Frameworks */ = {isa = PBXBuildFile; productRef = 8048D1742E9751CB0059E492 /* LoginModule */; };
+		80E112C22E99E33700819086 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 80E112C12E99E33700819086 /* FirebaseCore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 				8044E70E2E692DDD00AB4DEE /* RouteMapKit in Frameworks */,
 				803C44432E98A5A90074DAAF /* FirebaseAnalyticsIdentitySupport in Frameworks */,
 				803C44412E98A5A90074DAAF /* FirebaseAnalyticsCore in Frameworks */,
+				80E112C22E99E33700819086 /* FirebaseCore in Frameworks */,
 				803C44472E98A5A90074DAAF /* FirebaseCrashlytics in Frameworks */,
 				803C443F2E98A5A90074DAAF /* FirebaseAnalytics in Frameworks */,
 				803C443D2E98A5A90074DAAF /* FirebaseAI in Frameworks */,
@@ -160,6 +162,7 @@
 				803C44442E98A5A90074DAAF /* FirebaseAppDistribution-Beta */,
 				803C44462E98A5A90074DAAF /* FirebaseCrashlytics */,
 				803C44482E98A5A90074DAAF /* FirebasePerformance */,
+				80E112C12E99E33700819086 /* FirebaseCore */,
 			);
 			productName = MeddSup;
 			productReference = 8044E6DD2E692D3800AB4DEE /* MeddSup.app */;
@@ -704,6 +707,11 @@
 		8048D1742E9751CB0059E492 /* LoginModule */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = LoginModule;
+		};
+		80E112C12E99E33700819086 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 803C443B2E98A5A90074DAAF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
