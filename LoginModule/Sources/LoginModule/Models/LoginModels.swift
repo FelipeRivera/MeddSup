@@ -9,11 +9,11 @@ import Foundation
 
 // MARK: - Login Request
 public struct LoginRequest: Sendable, Codable {
-    public let user: String
+    public let email: String
     public let password: String
     
-    public init(user: String, password: String) {
-        self.user = user
+    public init(email: String, password: String) {
+        self.email = email
         self.password = password
     }
 }

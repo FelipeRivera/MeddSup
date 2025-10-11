@@ -49,7 +49,7 @@ public class LoginService: @unchecked Sendable {
             throw LoginError.networkError(.localized("error.invalid.url"))
         }
         
-        let request = LoginRequest(user: user, password: password)
+        let request = LoginRequest(email: user, password: password)
         
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "POST"
