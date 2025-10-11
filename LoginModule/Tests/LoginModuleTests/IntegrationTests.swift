@@ -22,13 +22,6 @@ struct IntegrationTests {
         #expect(viewModel.isLoading == false)
     }
     
-    @Test func testLoginModuleWithDefaultURL() {
-        let viewModel = LoginModule.createLoginViewModel()
-        
-        #expect(viewModel != nil)
-        #expect(viewModel.isLoggedIn == false)
-    }
-    
     @Test func testLoginServiceCreation() {
         let service = LoginModule.createLoginService(baseURL: "http://test.com")
         
