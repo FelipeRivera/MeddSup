@@ -8,7 +8,7 @@
 import Foundation
 
 #if DEBUG
-public class SimpleMockLoginService: LoginService {
+public class SimpleMockLoginService: LoginService, @unchecked Sendable {
     public var shouldSucceed: Bool = true
     public var mockResponse: LoginResponse?
     public var mockError: LoginError?
@@ -25,7 +25,8 @@ public class SimpleMockLoginService: LoginService {
             if let response = mockResponse {
                 return response
             } else {
-                return LoginResponse(accessToken: "mock_token_\(user)")
+                // Default mock includes role and expiry to match new server response
+                return LoginResponse(accessToken: "mock_token_\(user)", expiresIn: 3600, role: "security_admin", tokenType: "Bearer")
             }
         } else {
             throw mockError ?? LoginError.invalidCredentials

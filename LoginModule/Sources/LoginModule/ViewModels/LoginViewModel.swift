@@ -20,8 +20,33 @@ public final class LoginViewModel: ObservableObject {
     private let loginService: LoginService
     private var loginTask: Task<Void, Never>?
     
+    // UserDefaults keys
+    private let tokenKey = "access_token"
+    private let roleKey = "user_role"
+    private let tokenExpiryKey = "access_token_expires_at"
+    
     public init(loginService: LoginService) {
         self.loginService = loginService
+        
+        if UserDefaults.standard.string(forKey: tokenKey) != nil {
+            if let expiry = UserDefaults.standard.object(forKey: tokenExpiryKey) as? TimeInterval {
+                let expiryDate = Date(timeIntervalSince1970: expiry)
+                if expiryDate > Date() {
+                    // Token still valid
+                    isLoggedIn = true
+                } else {
+                    // Token expired - clear
+                    UserDefaults.standard.removeObject(forKey: tokenKey)
+                    UserDefaults.standard.removeObject(forKey: roleKey)
+                    UserDefaults.standard.removeObject(forKey: tokenExpiryKey)
+                    isLoggedIn = false
+                }
+            } else {
+                isLoggedIn = true
+            }
+        } else {
+            isLoggedIn = false
+        }
     }
     
     public func login() {
@@ -58,7 +83,22 @@ public final class LoginViewModel: ObservableObject {
             do {
                 let response = try await loginService.login(user: trimmedEmail, password: password)
                 
-                UserDefaults.standard.set(response.accessToken, forKey: "access_token")
+                // Persist token
+                UserDefaults.standard.set(response.accessToken, forKey: tokenKey)
+                
+                // Persist role if provided
+                if let role = response.role {
+                    UserDefaults.standard.set(role, forKey: roleKey)
+                }
+                
+                // Persist expiry if provided
+                if let expiresIn = response.expiresIn {
+                    let expiryTimestamp = Date().addingTimeInterval(TimeInterval(expiresIn)).timeIntervalSince1970
+                    UserDefaults.standard.set(expiryTimestamp, forKey: tokenExpiryKey)
+                } else {
+                    UserDefaults.standard.removeObject(forKey: tokenExpiryKey)
+                }
+                
                 isLoggedIn = true
                 
             } catch {
@@ -77,7 +117,9 @@ public final class LoginViewModel: ObservableObject {
     public func logout() {
         loginTask?.cancel()
         
-        UserDefaults.standard.removeObject(forKey: "access_token")
+        UserDefaults.standard.removeObject(forKey: tokenKey)
+        UserDefaults.standard.removeObject(forKey: roleKey)
+        UserDefaults.standard.removeObject(forKey: tokenExpiryKey)
         isLoggedIn = false
         email = ""
         password = ""

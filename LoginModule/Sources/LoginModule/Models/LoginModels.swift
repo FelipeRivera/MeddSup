@@ -21,13 +21,29 @@ public struct LoginRequest: Sendable, Codable {
 // MARK: - Login Response
 public struct LoginResponse: Sendable, Codable {
     public let accessToken: String
-    
+    public let expiresIn: Int?
+    public let role: String?
+    public let tokenType: String?
+
     enum CodingKeys: String, CodingKey {
         case accessToken = "access_token"
+        case expiresIn = "expires_in"
+        case role
+        case tokenType = "token_type"
     }
-    
-    public init(accessToken: String) {
+
+    // Full initializer
+    public init(accessToken: String, expiresIn: Int? = nil, role: String? = nil, tokenType: String? = nil) {
         self.accessToken = accessToken
+        self.expiresIn = expiresIn
+        self.role = role
+        self.tokenType = tokenType
+    }
+
+    // Convenience computed property for expiration date (now + expiresIn)
+    public var expirationDate: Date? {
+        guard let expiresIn = expiresIn else { return nil }
+        return Date().addingTimeInterval(TimeInterval(expiresIn))
     }
 }
 

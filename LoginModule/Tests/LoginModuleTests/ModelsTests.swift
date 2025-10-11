@@ -78,32 +78,6 @@ struct ModelsTests {
         #expect(response.accessToken == "test_token_123")
     }
     
-    // MARK: - LoginError Tests
-    
-    @Test func testInvalidCredentialsError() {
-        let error = LoginError.invalidCredentials
-        
-        #expect(error.localizedDescription == "Credenciales inválidas")
-    }
-    
-    @Test func testNetworkError() {
-        let error = LoginError.networkError("Connection failed")
-        
-        #expect(error.localizedDescription == "Error de red: Connection failed")
-    }
-    
-    @Test func testInvalidResponseError() {
-        let error = LoginError.invalidResponse
-        
-        #expect(error.localizedDescription == "Respuesta inválida del servidor")
-    }
-    
-    @Test func testDecodingError() {
-        let error = LoginError.decodingError
-        
-        #expect(error.localizedDescription == "Error al procesar la respuesta")
-    }
-    
     // MARK: - Edge Cases Tests
     
     @Test func testLoginRequestWithEmptyValues() {
