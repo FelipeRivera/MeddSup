@@ -17,8 +17,13 @@ struct ContentView: View {
     var body: some View {
         Group {
             if loginViewModel.isLoggedIn {
-                NavigationStack {
-                    RouteMapScreen(api: routesApi)
+                VStack {
+                    Button("Test Log out") {
+                        loginViewModel.logout()
+                    }
+                    NavigationStack {
+                        RouteMapScreen(api: routesApi)
+                    }
                 }
             } else {
                 LoginView()

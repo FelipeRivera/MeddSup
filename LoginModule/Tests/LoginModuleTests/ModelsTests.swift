@@ -14,14 +14,14 @@ struct ModelsTests {
     // MARK: - LoginRequest Tests
     
     @Test func testLoginRequestInitialization() {
-        let request = LoginRequest(user: "testuser", password: "testpass")
+        let request = LoginRequest(email: "testuser", password: "testpass")
         
-        #expect(request.user == "testuser")
+        #expect(request.email == "testuser")
         #expect(request.password == "testpass")
     }
     
     @Test func testLoginRequestEncoding() throws {
-        let request = LoginRequest(user: "testuser", password: "testpass")
+        let request = LoginRequest(email: "testuser", password: "testpass")
         
         let jsonData = try JSONEncoder().encode(request)
         let jsonString = String(data: jsonData, encoding: .utf8)
@@ -34,7 +34,7 @@ struct ModelsTests {
     @Test func testLoginRequestDecoding() throws {
         let jsonString = """
         {
-            "user": "testuser",
+            "email": "testuser",
             "password": "testpass"
         }
         """
@@ -42,7 +42,7 @@ struct ModelsTests {
         let jsonData = jsonString.data(using: .utf8)!
         let request = try JSONDecoder().decode(LoginRequest.self, from: jsonData)
         
-        #expect(request.user == "testuser")
+        #expect(request.email == "testuser")
         #expect(request.password == "testpass")
     }
     
@@ -81,9 +81,9 @@ struct ModelsTests {
     // MARK: - Edge Cases Tests
     
     @Test func testLoginRequestWithEmptyValues() {
-        let request = LoginRequest(user: "", password: "")
+        let request = LoginRequest(email: "", password: "")
         
-        #expect(request.user == "")
+        #expect(request.email == "")
         #expect(request.password == "")
     }
     
@@ -94,11 +94,11 @@ struct ModelsTests {
     }
     
     @Test func testLoginRequestWithSpecialCharacters() {
-        let user = "user@example.com"
+        let email = "user@example.com"
         let password = "pass@word#123"
-        let request = LoginRequest(user: user, password: password)
+        let request = LoginRequest(email: email, password: password)
         
-        #expect(request.user == user)
+        #expect(request.email == email)
         #expect(request.password == password)
     }
 }
