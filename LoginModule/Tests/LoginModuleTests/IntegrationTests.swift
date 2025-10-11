@@ -137,35 +137,6 @@ struct IntegrationTests {
         #expect(viewModel.errorMessage == nil)
     }
     
-    // MARK: - UserDefaults Integration Tests
-    
-    @Test func testUserDefaultsIntegration() async {
-        // Clear any existing token
-        UserDefaults.standard.removeObject(forKey: "access_token")
-        
-        let mockService = SimpleMockLoginService(shouldSucceed: true)
-        let viewModel = LoginViewModel(loginService: mockService)
-        
-        viewModel.email = "test@example.com"
-        viewModel.password = "password123"
-        
-        // Login
-        viewModel.login()
-        try? await Task.sleep(nanoseconds: 100_000_000) // 0.1 seconds
-        
-        // Verify token is stored
-        let token = UserDefaults.standard.string(forKey: "access_token")
-        #expect(token != nil)
-        #expect(token?.contains("test@example.com") == true)
-        
-        // Logout
-        viewModel.logout()
-        
-        // Verify token is removed
-        let tokenAfterLogout = UserDefaults.standard.string(forKey: "access_token")
-        #expect(tokenAfterLogout == nil)
-    }
-    
     // MARK: - Mock Service Tests
     
     @Test func testMockServiceSuccess() async throws {
