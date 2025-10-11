@@ -2,7 +2,7 @@ name: iOS CI — App & SPM (iOS 15+)
 
 on:
   pull_request:
-    branches: [ "**" ]
+    branches: [ main, develop ]
   push:
     branches: [ main, develop ]
   workflow_dispatch:
