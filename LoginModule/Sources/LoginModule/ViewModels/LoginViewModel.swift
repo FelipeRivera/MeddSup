@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-@available(iOS 15.0, *)
+@available(iOS 15.0, macOS 10.15, *)
 @MainActor
 public final class LoginViewModel: ObservableObject {
     @Published var email: String = ""
