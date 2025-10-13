@@ -38,6 +38,7 @@
 		8044E6EE2E692D3900AB4DEE /* MeddSupTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MeddSupTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8044E6F82E692D3900AB4DEE /* MeddSupUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MeddSupUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8048D16F2E974D270059E492 /* LoginModule */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LoginModule; sourceTree = SOURCE_ROOT; };
+		80E198B42E9DC3F300A5BC21 /* ViewClientsModule */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ViewClientsModule; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -135,6 +136,7 @@
 		8048D16E2E974C330059E492 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				80E198B42E9DC3F300A5BC21 /* ViewClientsModule */,
 				8048D16F2E974D270059E492 /* LoginModule */,
 			);
 			path = Modules;
