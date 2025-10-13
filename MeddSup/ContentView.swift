@@ -8,6 +8,7 @@
 import SwiftUI
 import RouteMapKit
 import LoginModule
+import ViewClientsModule
 
 struct ContentView: View {
     let routesApi = RouteAPI(baseURL: URL(string: "http://localhost:8080")!)
@@ -17,14 +18,12 @@ struct ContentView: View {
     var body: some View {
         Group {
             if loginViewModel.isLoggedIn {
-                VStack {
-                    Button("Test Log out") {
-                        loginViewModel.logout()
-                    }
-                    NavigationStack {
-                        RouteMapScreen(api: routesApi)
-                    }
-                }
+                TabBarView(
+                    baseURL: "http://portal-web-alb-701001447.us-east-1.elb.amazonaws.com",
+                    token: loginViewModel.authToken ?? "",
+                    role: loginViewModel.userRole ?? "user",
+                    loginViewModel: loginViewModel
+                )
             } else {
                 LoginView()
                     .environmentObject(loginViewModel)
