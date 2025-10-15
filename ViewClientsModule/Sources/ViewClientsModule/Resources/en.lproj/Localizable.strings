@@ -21,7 +21,7 @@
 "viewclients.date.picker.cancel" = "Cancel";
 
 // MARK: - Tab Bar
-"tabbar.home" = "Route Consultation";
+"tabbar.home" = "Clients";
 "tabbar.search" = "Search";
 "tabbar.notifications" = "Notifications";
 "tabbar.profile" = "Profile";
