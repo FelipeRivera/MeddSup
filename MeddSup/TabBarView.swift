@@ -59,44 +59,51 @@ struct TabBarView: View {
     }
     
     var body: some View {
-        TabView(selection: $selectedTab) {
-            // Home Tab - ViewClientsModule
-            ViewClientsModule.createViewClientsView(
-                baseURL: baseURL,
-                token: token,
-                role: role
-            )
-            .tabItem {
-                Image(systemName: TabItem.home.systemImage)
-                Text(TabItem.home.title)
-            }
-            .tag(TabItem.home)
+        ZStack {
+            // Background to prevent tab bar disappearing
+            Color.gray.opacity(0.05)
+                .ignoresSafeArea(.all, edges: .bottom)
             
-            // Search Tab - Placeholder
-            SearchView()
+            TabView(selection: $selectedTab) {
+                // Home Tab - ViewClientsModule
+                ViewClientsModule.createViewClientsView(
+                    baseURL: baseURL,
+                    token: token,
+                    role: role
+                )
+                .tabItem {
+                    Image(systemName: TabItem.home.systemImage)
+                    Text(TabItem.home.title)
+                }
+                .tag(TabItem.home)
+                
+                // Search Tab - Placeholder
+                SearchView()
                 .tabItem {
                     Image(systemName: TabItem.search.systemImage)
                     Text(TabItem.search.title)
                 }
-                .tag(TabItem.search)
-            
-            // Notifications Tab - Placeholder
-            NotificationsView()
+                    .tag(TabItem.search)
+                
+                // Notifications Tab - Placeholder
+                NotificationsView()
                 .tabItem {
                     Image(systemName: TabItem.notifications.systemImage)
                     Text(TabItem.notifications.title)
                 }
-                .tag(TabItem.notifications)
-            
-            // Profile Tab - Placeholder
-            ProfileView(loginViewModel: loginViewModel)
+                    .tag(TabItem.notifications)
+                
+                // Profile Tab - Placeholder
+                ProfileView(loginViewModel: loginViewModel)
                 .tabItem {
                     Image(systemName: TabItem.profile.systemImage)
                     Text(TabItem.profile.title)
                 }
-                .tag(TabItem.profile)
+                    .tag(TabItem.profile)
+            }
+            .accentColor(.black)
+            .background(Color.clear)
         }
-        .accentColor(.black)
     }
 }
 
