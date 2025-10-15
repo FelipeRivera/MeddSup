@@ -18,13 +18,13 @@ enum TabItem: CaseIterable {
     var title: String {
         switch self {
         case .home:
-            return "Consulta de Rutas"
+            return ViewClientsLocalizationHelper.shared.localizedString(for: "tabbar.home")
         case .search:
-            return "Buscar"
+            return ViewClientsLocalizationHelper.shared.localizedString(for: "tabbar.search")
         case .notifications:
-            return "Notificaciones"
+            return ViewClientsLocalizationHelper.shared.localizedString(for: "tabbar.notifications")
         case .profile:
-            return "Perfil"
+            return ViewClientsLocalizationHelper.shared.localizedString(for: "tabbar.profile")
         }
     }
     
@@ -59,51 +59,44 @@ struct TabBarView: View {
     }
     
     var body: some View {
-        ZStack {
-            // Background to prevent tab bar disappearing
-            Color.gray.opacity(0.05)
-                .ignoresSafeArea(.all, edges: .bottom)
+        TabView(selection: $selectedTab) {
+            // Home Tab - ViewClientsModule
+            ViewClientsModule.createViewClientsView(
+                baseURL: baseURL,
+                token: token,
+                role: role
+            )
+            .tabItem {
+                Image(systemName: TabItem.home.systemImage)
+                Text(TabItem.home.title)
+            }
+            .tag(TabItem.home)
             
-            TabView(selection: $selectedTab) {
-                // Home Tab - ViewClientsModule
-                ViewClientsModule.createViewClientsView(
-                    baseURL: baseURL,
-                    token: token,
-                    role: role
-                )
-                .tabItem {
-                    Image(systemName: TabItem.home.systemImage)
-                    Text(TabItem.home.title)
-                }
-                .tag(TabItem.home)
-                
-                // Search Tab - Placeholder
-                SearchView()
+            // Search Tab - Placeholder
+            SearchView()
                 .tabItem {
                     Image(systemName: TabItem.search.systemImage)
                     Text(TabItem.search.title)
                 }
-                    .tag(TabItem.search)
-                
-                // Notifications Tab - Placeholder
-                NotificationsView()
+                .tag(TabItem.search)
+            
+            // Notifications Tab - Placeholder
+            NotificationsView()
                 .tabItem {
                     Image(systemName: TabItem.notifications.systemImage)
                     Text(TabItem.notifications.title)
                 }
-                    .tag(TabItem.notifications)
-                
-                // Profile Tab - Placeholder
-                ProfileView(loginViewModel: loginViewModel)
+                .tag(TabItem.notifications)
+            
+            // Profile Tab - Placeholder
+            ProfileView(loginViewModel: loginViewModel)
                 .tabItem {
                     Image(systemName: TabItem.profile.systemImage)
                     Text(TabItem.profile.title)
                 }
-                    .tag(TabItem.profile)
-            }
-            .accentColor(.black)
-            .background(Color.clear)
+                .tag(TabItem.profile)
         }
+        .accentColor(.black)
     }
 }
 
@@ -115,11 +108,11 @@ struct SearchView: View {
                 .font(.system(size: 60))
                 .foregroundColor(.gray)
             
-            Text("Buscar")
+            Text(ViewClientsLocalizationHelper.shared.localizedString(for: "placeholder.search.title"))
                 .font(.title2)
                 .fontWeight(.semibold)
             
-            Text("Esta funcionalidad estará disponible próximamente")
+            Text(ViewClientsLocalizationHelper.shared.localizedString(for: "placeholder.search.message"))
                 .font(.body)
                 .foregroundColor(.gray)
                 .multilineTextAlignment(.center)
@@ -137,11 +130,11 @@ struct NotificationsView: View {
                 .font(.system(size: 60))
                 .foregroundColor(.gray)
             
-            Text("Notificaciones")
+            Text(ViewClientsLocalizationHelper.shared.localizedString(for: "placeholder.notifications.title"))
                 .font(.title2)
                 .fontWeight(.semibold)
             
-            Text("Esta funcionalidad estará disponible próximamente")
+            Text(ViewClientsLocalizationHelper.shared.localizedString(for: "placeholder.notifications.message"))
                 .font(.body)
                 .foregroundColor(.gray)
                 .multilineTextAlignment(.center)
@@ -161,11 +154,11 @@ struct ProfileView: View {
                 .font(.system(size: 80))
                 .foregroundColor(.gray)
             
-            Text("Perfil")
+            Text(ViewClientsLocalizationHelper.shared.localizedString(for: "tabbar.profile"))
                 .font(.title2)
                 .fontWeight(.semibold)
             
-            Button("Cerrar Sesión") {
+            Button(ViewClientsLocalizationHelper.shared.localizedString(for: "tabbar.profile.logout")) {
                 loginViewModel.logout()
             }
             .font(.system(size: 16, weight: .medium))

@@ -27,11 +27,12 @@ public struct ViewClientsView: View {
         NavigationView {
             VStack {
                 DatePicker(
-                    String.localized("viewclients.date.picker.title"),
+                    "",
                     selection: $tempSelectedDate,
                     displayedComponents: .date
                 )
                 .datePickerStyle(.wheel)
+                .labelsHidden()
                 .padding()
                 
                 Spacer()

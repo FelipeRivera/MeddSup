@@ -40,3 +40,4 @@
 "error.decoding" = "Error al procesar la respuesta";
 "error.unauthorized" = "Acceso no autorizado";
 "error.server" = "Error del servidor: %d";
+
