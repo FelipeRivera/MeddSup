@@ -52,12 +52,12 @@ public class ClientService: ClientServiceProtocol {
     }
 }
 
-// MARK: - Mock Service for Testing
-public class MockClientService: ClientServiceProtocol {
+// MARK: - Static Mock Service (non-network)
+public final class MockClientService: ClientServiceProtocol {
+    
     public init() {}
     
     public func fetchClients(baseURL: String, token: String, role: String) -> AnyPublisher<[Client], ClientError> {
-        // Mock data matching the new API structure
         let mockClients = [
             Client(
                 id: "1",
@@ -101,3 +101,25 @@ public class MockClientService: ClientServiceProtocol {
             .eraseToAnyPublisher()
     }
 }
+
+// MARK: - Mock Service for Testing
+#if DEBUG
+public final class SimpleMockClientService: ClientServiceProtocol, @unchecked Sendable {
+    public var result: Result<[Client], ClientError>
+    
+    public init(result: Result<[Client], ClientError> = .success([])) {
+        self.result = result
+    }
+    
+    public func fetchClients(baseURL: String, token: String, role: String) -> AnyPublisher<[Client], ClientError> {
+        switch result {
+        case .success(let clients):
+            return Just(clients)
+                .setFailureType(to: ClientError.self)
+                .eraseToAnyPublisher()
+        case .failure(let error):
+            return Fail(error: error).eraseToAnyPublisher()
+        }
+    }
+}
+#endif

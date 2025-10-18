@@ -80,6 +80,7 @@ public class ViewClientsViewModel: ObservableObject {
     
     public func clearSearch() {
         searchText = ""
+        filteredClients = clients
     }
     
     public func formatDate(_ date: Date) -> String {
