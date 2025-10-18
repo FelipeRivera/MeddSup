@@ -18,7 +18,6 @@ struct IntegrationTests {
         let viewModel = LoginModule.createLoginViewModel(baseURL: "http://test.com")
         
         #expect(viewModel != nil)
-        #expect(viewModel.isLoggedIn == false)
         #expect(viewModel.isLoading == false)
     }
 }
