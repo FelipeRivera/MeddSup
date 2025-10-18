@@ -7,13 +7,27 @@
 
 import SwiftUI
 import RouteMapKit
+import LoginModule
+import ViewClientsModule
 
 struct ContentView: View {
-    let api = RouteAPI(baseURL: URL(string: "http://localhost:8080")!)
+    let routesApi = RouteAPI(baseURL: URL(string: "http://localhost:8080")!)
+    
+    @StateObject private var loginViewModel = LoginModule.createLoginViewModel(baseURL: "http://portal-web-alb-701001447.us-east-1.elb.amazonaws.com/auth")
     
     var body: some View {
-        NavigationStack {
-            RouteMapScreen(api: api)
+        Group {
+            if loginViewModel.isLoggedIn {
+                TabBarView(
+                    baseURL: "http://portal-web-alb-701001447.us-east-1.elb.amazonaws.com",
+                    token: loginViewModel.authToken ?? "",
+                    role: loginViewModel.userRole ?? "user",
+                    loginViewModel: loginViewModel
+                )
+            } else {
+                LoginView()
+                    .environmentObject(loginViewModel)
+            }
         }
     }
 }

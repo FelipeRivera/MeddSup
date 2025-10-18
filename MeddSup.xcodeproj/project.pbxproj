@@ -7,7 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		803C443F2E98A5A90074DAAF /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 803C443E2E98A5A90074DAAF /* FirebaseAnalytics */; };
+		803C44412E98A5A90074DAAF /* FirebaseAnalyticsCore in Frameworks */ = {isa = PBXBuildFile; productRef = 803C44402E98A5A90074DAAF /* FirebaseAnalyticsCore */; };
+		803C44472E98A5A90074DAAF /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 803C44462E98A5A90074DAAF /* FirebaseCrashlytics */; };
+		803C44492E98A5A90074DAAF /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = 803C44482E98A5A90074DAAF /* FirebasePerformance */; };
 		8044E70E2E692DDD00AB4DEE /* RouteMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8044E70D2E692DDD00AB4DEE /* RouteMapKit */; };
+		8048D1752E9751CB0059E492 /* LoginModule in Frameworks */ = {isa = PBXBuildFile; productRef = 8048D1742E9751CB0059E492 /* LoginModule */; };
+		80E112C22E99E33700819086 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 80E112C12E99E33700819086 /* FirebaseCore */; };
+		80E198B82E9DC8E800A5BC21 /* ViewClientsModule in Frameworks */ = {isa = PBXBuildFile; productRef = 80E198B72E9DC8E800A5BC21 /* ViewClientsModule */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,11 +38,26 @@
 		8044E6DD2E692D3800AB4DEE /* MeddSup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeddSup.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8044E6EE2E692D3900AB4DEE /* MeddSupTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MeddSupTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8044E6F82E692D3900AB4DEE /* MeddSupUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MeddSupUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8048D16F2E974D270059E492 /* LoginModule */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LoginModule; sourceTree = SOURCE_ROOT; };
+		80E198B42E9DC3F300A5BC21 /* ViewClientsModule */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ViewClientsModule; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		800AA31E2E9ADE4400C51872 /* Exceptions for "MeddSup" folder in "MeddSup" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 8044E6DC2E692D3800AB4DEE /* MeddSup */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		8044E6DF2E692D3800AB4DEE /* MeddSup */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				800AA31E2E9ADE4400C51872 /* Exceptions for "MeddSup" folder in "MeddSup" target */,
+			);
 			path = MeddSup;
 			sourceTree = "<group>";
 		};
@@ -56,7 +78,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8048D1752E9751CB0059E492 /* LoginModule in Frameworks */,
+				803C44492E98A5A90074DAAF /* FirebasePerformance in Frameworks */,
 				8044E70E2E692DDD00AB4DEE /* RouteMapKit in Frameworks */,
+				803C44412E98A5A90074DAAF /* FirebaseAnalyticsCore in Frameworks */,
+				80E198B82E9DC8E800A5BC21 /* ViewClientsModule in Frameworks */,
+				80E112C22E99E33700819086 /* FirebaseCore in Frameworks */,
+				803C44472E98A5A90074DAAF /* FirebaseCrashlytics in Frameworks */,
+				803C443F2E98A5A90074DAAF /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,6 +109,7 @@
 		8044E6D42E692D3800AB4DEE = {
 			isa = PBXGroup;
 			children = (
+				8048D16E2E974C330059E492 /* Modules */,
 				8044E6DF2E692D3800AB4DEE /* MeddSup */,
 				8044E6F12E692D3900AB4DEE /* MeddSupTests */,
 				8044E6FB2E692D3900AB4DEE /* MeddSupUITests */,
@@ -105,6 +135,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		8048D16E2E974C330059E492 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				80E198B42E9DC3F300A5BC21 /* ViewClientsModule */,
+				8048D16F2E974D270059E492 /* LoginModule */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -115,6 +154,7 @@
 				8044E6D92E692D3800AB4DEE /* Sources */,
 				8044E6DA2E692D3800AB4DEE /* Frameworks */,
 				8044E6DB2E692D3800AB4DEE /* Resources */,
+				800AA31C2E99ECBB00C51872 /* Crashlytics */,
 			);
 			buildRules = (
 			);
@@ -126,6 +166,13 @@
 			name = MeddSup;
 			packageProductDependencies = (
 				8044E70D2E692DDD00AB4DEE /* RouteMapKit */,
+				8048D1742E9751CB0059E492 /* LoginModule */,
+				803C443E2E98A5A90074DAAF /* FirebaseAnalytics */,
+				803C44402E98A5A90074DAAF /* FirebaseAnalyticsCore */,
+				803C44462E98A5A90074DAAF /* FirebaseCrashlytics */,
+				803C44482E98A5A90074DAAF /* FirebasePerformance */,
+				80E112C12E99E33700819086 /* FirebaseCore */,
+				80E198B72E9DC8E800A5BC21 /* ViewClientsModule */,
 			);
 			productName = MeddSup;
 			productReference = 8044E6DD2E692D3800AB4DEE /* MeddSup.app */;
@@ -211,6 +258,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				80001C182E6E3935006D050E /* XCRemoteSwiftPackageReference "RouteMapKit" */,
+				803C443B2E98A5A90074DAAF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 8044E6DE2E692D3800AB4DEE /* Products */;
@@ -247,6 +295,32 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		800AA31C2E99ECBB00C51872 /* Crashlytics */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist",
+				"$(TARGET_BUILD_DIR)/$(EXECUTABLE_PATH)",
+			);
+			name = Crashlytics;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8044E6D92E692D3800AB4DEE /* Sources */ = {
@@ -408,11 +482,13 @@
 				CODE_SIGN_ENTITLEMENTS = MeddSup/MeddSup.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"MeddSup/Preview Content\"";
 				DEVELOPMENT_TEAM = L4YP8ZJGXX;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MeddSup/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -421,8 +497,7 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -452,6 +527,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MeddSup/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -460,8 +536,7 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -618,12 +693,53 @@
 				kind = branch;
 			};
 		};
+		803C443B2E98A5A90074DAAF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.4.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		803C443E2E98A5A90074DAAF /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 803C443B2E98A5A90074DAAF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		803C44402E98A5A90074DAAF /* FirebaseAnalyticsCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 803C443B2E98A5A90074DAAF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsCore;
+		};
+		803C44462E98A5A90074DAAF /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 803C443B2E98A5A90074DAAF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		803C44482E98A5A90074DAAF /* FirebasePerformance */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 803C443B2E98A5A90074DAAF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebasePerformance;
+		};
 		8044E70D2E692DDD00AB4DEE /* RouteMapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RouteMapKit;
+		};
+		8048D1742E9751CB0059E492 /* LoginModule */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LoginModule;
+		};
+		80E112C12E99E33700819086 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 803C443B2E98A5A90074DAAF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		80E198B72E9DC8E800A5BC21 /* ViewClientsModule */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ViewClientsModule;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

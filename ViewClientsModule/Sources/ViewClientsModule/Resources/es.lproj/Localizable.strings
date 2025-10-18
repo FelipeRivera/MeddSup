@@ -1,0 +1,43 @@
+/*
+  Localizable.strings
+  ViewClientsModule
+
+  Created by Felipe Rivera on 3/09/25.
+*/
+
+// MARK: - UI Labels
+"viewclients.header.title" = "Consulta de Rutas de Visita";
+"viewclients.main.title" = "Consulta de Rutas";
+"viewclients.configure.button" = "Configurar";
+"viewclients.date.label" = "Selecciona la Fecha:";
+"viewclients.search.placeholder" = "Buscar clientes...";
+"viewclients.client.address" = "Dirección: %@";
+"viewclients.client.schedule" = "Horario Estimado: %@";
+"viewclients.client.travel.time" = "Tiempo de desplazamiento: %@";
+
+// MARK: - Date Picker
+"viewclients.date.picker.title" = "Seleccionar Fecha";
+"viewclients.date.picker.accept" = "Aceptar";
+"viewclients.date.picker.cancel" = "Cancelar";
+
+// MARK: - Tab Bar
+"tabbar.home" = "Clientes";
+"tabbar.search" = "Buscar";
+"tabbar.notifications" = "Notificaciones";
+"tabbar.profile" = "Perfil";
+"tabbar.profile.logout" = "Cerrar Sesión";
+
+// MARK: - Placeholder Views
+"placeholder.search.title" = "Buscar";
+"placeholder.search.message" = "Esta funcionalidad estará disponible próximamente";
+"placeholder.notifications.title" = "Notificaciones";
+"placeholder.notifications.message" = "Esta funcionalidad estará disponible próximamente";
+
+// MARK: - Error Messages
+"error.loading.clients" = "Error al cargar clientes";
+"error.network" = "Error de red: %@";
+"error.invalid.response" = "Respuesta inválida del servidor";
+"error.decoding" = "Error al procesar la respuesta";
+"error.unauthorized" = "Acceso no autorizado";
+"error.server" = "Error del servidor: %d";
+

@@ -1,0 +1,27 @@
+/*
+  Localizable.strings
+  LoginModule
+
+  Created by Felipe Rivera on 3/09/25.
+*/
+
+// MARK: - UI Labels
+"login.header.title" = "Inicio de sesión";
+"app.title" = "MeddiSuply";
+"email.placeholder" = "Correo Electrónico";
+"password.placeholder" = "Contraseña";
+"login.button.title" = "Iniciar Sesión";
+"register.button.title" = "Registrarse";
+"forgot.password.button.title" = "¿Olvidó su contraseña?";
+
+// MARK: - Error Messages
+"error.validation.empty.fields" = "Por favor completa todos los campos";
+"error.invalid.credentials" = "Credenciales inválidas";
+"error.network" = "Error de red: %@";
+"error.invalid.response" = "Respuesta inválida del servidor";
+"error.decoding" = "Error al procesar la respuesta";
+"error.service.deallocated" = "Servicio desasignado";
+"error.invalid.url" = "URL inválida";
+"error.server" = "Error del servidor: %d";
+"error.validation.invalid.email" = "Por favor ingresa un correo electrónico válido.";
+"error.validation.password.too.short" = "La contraseña debe tener al menos 8 caracteres.";
