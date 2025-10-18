@@ -136,6 +136,14 @@ public final class LoginViewModel: ObservableObject {
         return !trimmedEmail.isEmpty && !password.isEmpty && !isLoading
     }
     
+    public var authToken: String? {
+        return UserDefaults.standard.string(forKey: tokenKey)
+    }
+    
+    public var userRole: String? {
+        return UserDefaults.standard.string(forKey: roleKey)
+    }
+    
     deinit {
         loginTask?.cancel()
     }

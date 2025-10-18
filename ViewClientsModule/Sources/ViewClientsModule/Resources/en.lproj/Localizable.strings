@@ -1,0 +1,43 @@
+/* 
+  Localizable.strings
+  ViewClientsModule
+
+  Created by Felipe Rivera on 3/09/25.
+*/
+
+// MARK: - UI Labels
+"viewclients.header.title" = "Visit Route Consultation";
+"viewclients.main.title" = "Route Consultation";
+"viewclients.configure.button" = "Configure";
+"viewclients.date.label" = "Select the Date:";
+"viewclients.search.placeholder" = "Search clients...";
+"viewclients.client.address" = "Address: %@";
+"viewclients.client.schedule" = "Estimated Schedule: %@";
+"viewclients.client.travel.time" = "Travel Time: %@";
+
+// MARK: - Date Picker
+"viewclients.date.picker.title" = "Select Date";
+"viewclients.date.picker.accept" = "Accept";
+"viewclients.date.picker.cancel" = "Cancel";
+
+// MARK: - Tab Bar
+"tabbar.home" = "Clients";
+"tabbar.search" = "Search";
+"tabbar.notifications" = "Notifications";
+"tabbar.profile" = "Profile";
+"tabbar.profile.logout" = "Log Out";
+
+// MARK: - Placeholder Views
+"placeholder.search.title" = "Search";
+"placeholder.search.message" = "This functionality will be available soon";
+"placeholder.notifications.title" = "Notifications";
+"placeholder.notifications.message" = "This functionality will be available soon";
+
+// MARK: - Error Messages
+"error.loading.clients" = "Error loading clients";
+"error.network" = "Network error: %@";
+"error.invalid.response" = "Invalid server response";
+"error.decoding" = "Error processing response";
+"error.unauthorized" = "Unauthorized access";
+"error.server" = "Server error: %d";
+

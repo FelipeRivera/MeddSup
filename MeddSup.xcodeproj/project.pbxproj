@@ -14,6 +14,7 @@
 		8044E70E2E692DDD00AB4DEE /* RouteMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8044E70D2E692DDD00AB4DEE /* RouteMapKit */; };
 		8048D1752E9751CB0059E492 /* LoginModule in Frameworks */ = {isa = PBXBuildFile; productRef = 8048D1742E9751CB0059E492 /* LoginModule */; };
 		80E112C22E99E33700819086 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 80E112C12E99E33700819086 /* FirebaseCore */; };
+		80E198B82E9DC8E800A5BC21 /* ViewClientsModule in Frameworks */ = {isa = PBXBuildFile; productRef = 80E198B72E9DC8E800A5BC21 /* ViewClientsModule */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 		8044E6EE2E692D3900AB4DEE /* MeddSupTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MeddSupTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8044E6F82E692D3900AB4DEE /* MeddSupUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MeddSupUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8048D16F2E974D270059E492 /* LoginModule */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LoginModule; sourceTree = SOURCE_ROOT; };
+		80E198B42E9DC3F300A5BC21 /* ViewClientsModule */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ViewClientsModule; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -80,6 +82,7 @@
 				803C44492E98A5A90074DAAF /* FirebasePerformance in Frameworks */,
 				8044E70E2E692DDD00AB4DEE /* RouteMapKit in Frameworks */,
 				803C44412E98A5A90074DAAF /* FirebaseAnalyticsCore in Frameworks */,
+				80E198B82E9DC8E800A5BC21 /* ViewClientsModule in Frameworks */,
 				80E112C22E99E33700819086 /* FirebaseCore in Frameworks */,
 				803C44472E98A5A90074DAAF /* FirebaseCrashlytics in Frameworks */,
 				803C443F2E98A5A90074DAAF /* FirebaseAnalytics in Frameworks */,
@@ -135,6 +138,7 @@
 		8048D16E2E974C330059E492 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				80E198B42E9DC3F300A5BC21 /* ViewClientsModule */,
 				8048D16F2E974D270059E492 /* LoginModule */,
 			);
 			path = Modules;
@@ -168,6 +172,7 @@
 				803C44462E98A5A90074DAAF /* FirebaseCrashlytics */,
 				803C44482E98A5A90074DAAF /* FirebasePerformance */,
 				80E112C12E99E33700819086 /* FirebaseCore */,
+				80E198B72E9DC8E800A5BC21 /* ViewClientsModule */,
 			);
 			productName = MeddSup;
 			productReference = 8044E6DD2E692D3800AB4DEE /* MeddSup.app */;
@@ -731,6 +736,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 803C443B2E98A5A90074DAAF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCore;
+		};
+		80E198B72E9DC8E800A5BC21 /* ViewClientsModule */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ViewClientsModule;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
