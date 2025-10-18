@@ -1,11 +1,11 @@
 name: CI Tests
 
 # DISABLED - Uncomment to enable CI
-# on:
-#   pull_request:
-#     branches: [ main, develop ]
-#   push:
-#     branches: [ main, develop ]
+ on:
+   pull_request:
+     branches: [ main, develop ]
+   push:
+     branches: [ main, develop ]
 
 jobs:
   test-login-module:
