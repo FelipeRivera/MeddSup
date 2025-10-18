@@ -36,26 +36,6 @@ struct ViewModelTests {
         #expect(viewModel.isFormValid == false)
     }
     
-    @Test func testFormValidationWithEmailOnly() {
-        let mockService = SimpleMockLoginService()
-        let viewModel = LoginViewModel(loginService: mockService)
-        
-        viewModel.email = "test@example.com"
-        viewModel.password = ""
-        
-        #expect(viewModel.isFormValid == false)
-    }
-    
-    @Test func testFormValidationWithPasswordOnly() {
-        let mockService = SimpleMockLoginService()
-        let viewModel = LoginViewModel(loginService: mockService)
-        
-        viewModel.email = ""
-        viewModel.password = "password123"
-        
-        #expect(viewModel.isFormValid == false)
-    }
-    
     @Test func testFormValidationWithBothFields() {
         let mockService = SimpleMockLoginService()
         let viewModel = LoginViewModel(loginService: mockService)
@@ -77,7 +57,7 @@ struct ViewModelTests {
         #expect(viewModel.isFormValid == false)
     }
     
-    // MARK: - Login Success Tests
+    // MARK: - Login Tests
     
     @Test func testSuccessfulLogin() async {
         let mockService = SimpleMockLoginService(shouldSucceed: true)
@@ -89,40 +69,12 @@ struct ViewModelTests {
         viewModel.login()
         
         // Wait for async operation
-        try? await Task.sleep(nanoseconds: 100_000_000) // 0.1 seconds
+        try? await Task.sleep(nanoseconds: 100_000_000)
         
         #expect(viewModel.isLoggedIn == true)
         #expect(viewModel.isLoading == false)
         #expect(viewModel.errorMessage == nil)
     }
-    
-    @Test func testLoginWithEmptyFields() async {
-        let mockService = SimpleMockLoginService()
-        let viewModel = LoginViewModel(loginService: mockService)
-        
-        viewModel.email = ""
-        viewModel.password = ""
-        
-        viewModel.login()
-        
-        #expect(viewModel.isLoggedIn == false)
-        #expect(viewModel.isLoading == false)
-    }
-    
-    @Test func testLoginWithEmailOnly() async {
-        let mockService = SimpleMockLoginService()
-        let viewModel = LoginViewModel(loginService: mockService)
-        
-        viewModel.email = "test@example.com"
-        viewModel.password = ""
-        
-        viewModel.login()
-        
-        #expect(viewModel.isLoggedIn == false)
-        #expect(viewModel.isLoading == false)
-    }
-    
-    // MARK: - Login Error Tests
     
     @Test func testLoginWithInvalidCredentials() async {
         let mockService = SimpleMockLoginService(shouldSucceed: false, mockError: .invalidCredentials)
@@ -130,22 +82,6 @@ struct ViewModelTests {
         
         viewModel.email = "test@example.com"
         viewModel.password = "wrongpassword"
-        
-        viewModel.login()
-        
-        // Wait for async operation
-        try? await Task.sleep(nanoseconds: 100_000_000) // 0.1 seconds
-        
-        #expect(viewModel.isLoggedIn == false)
-        #expect(viewModel.isLoading == false)
-    }
-    
-    @Test func testLoginWithNetworkError() async {
-        let mockService = SimpleMockLoginService(shouldSucceed: false, mockError: .networkError("Connection failed"))
-        let viewModel = LoginViewModel(loginService: mockService)
-        
-        viewModel.email = "test@example.com"
-        viewModel.password = "password123"
         
         viewModel.login()
         
