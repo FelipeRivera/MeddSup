@@ -63,36 +63,57 @@ public final class MockClientService: ClientServiceProtocol {
                 id: "1",
                 name: "Cliente1",
                 address: "Calle Falsa 123, Ciudad",
-                schedule: "09:00 - 10:00",
+                schedule: "2025-10-20 9:00am - 11:00am",
                 travelTime: "15 minutos"
             ),
             Client(
                 id: "2",
                 name: "Cliente2",
                 address: "Avenida Siempre Viva 742, Ciudad",
-                schedule: "11:00 - 12:00",
+                schedule: "2025-10-20 11:00am - 1:00pm",
                 travelTime: "20 minutos"
             ),
             Client(
                 id: "3",
                 name: "Cliente3",
                 address: "Plaza Mayor 456, Ciudad",
-                schedule: "13:00 - 14:00",
+                schedule: "2025-10-21 9:00am - 11:00am",
                 travelTime: "10 minutos"
             ),
             Client(
                 id: "4",
                 name: "Cliente4",
                 address: "Calle Principal 789, Miami",
-                schedule: "15:00 - 16:00",
+                schedule: "2025-10-21 11:00am - 1:00pm",
                 travelTime: "25 minutos"
             ),
             Client(
                 id: "5",
                 name: "Cliente5",
                 address: "Avenida Central 321, Ciudad",
-                schedule: "17:00 - 18:00",
+                schedule: "2025-10-22 9:00am - 11:00am",
                 travelTime: "12 minutos"
+            ),
+            Client(
+                id: "6",
+                name: "Cliente6",
+                address: "Calle Secundaria 555, Ciudad",
+                schedule: "2025-10-22 11:00am - 1:00pm",
+                travelTime: "18 minutos"
+            ),
+            Client(
+                id: "7",
+                name: "Cliente7",
+                address: "Avenida Norte 999, Ciudad",
+                schedule: "2025-10-23 9:00am - 11:00am",
+                travelTime: "22 minutos"
+            ),
+            Client(
+                id: "8",
+                name: "Cliente8",
+                address: "Plaza Central 888, Ciudad",
+                schedule: "2025-10-23 11:00am - 1:00pm",
+                travelTime: "16 minutos"
             )
         ]
         
