@@ -1,0 +1,41 @@
+/* 
+  Localizable.strings
+  OrderStatusModule
+
+  Created by Felipe Rivera on 3/09/25.
+*/
+
+// MARK: - Screen Title
+"screen.title" = "Consulta de estado de pedidos";
+
+// MARK: - Search
+"search.placeholder" = "Buscar por ID";
+"search.filter" = "Filtrar";
+
+// MARK: - Order Status
+"status.en_preparacion" = "En preparación";
+"status.transito" = "En tránsito";
+"status.entregado" = "Entregado";
+"status.pendiente" = "Pendiente";
+
+// MARK: - Order Details
+"order.id" = "Pedido #%@";
+"order.status" = "Estado: %@";
+"order.view_details" = "Ver Detalles";
+
+// MARK: - Errors
+"error.invalid_url" = "URL inválida";
+"error.no_data" = "No se recibieron datos";
+"error.decoding" = "Error al decodificar la respuesta";
+"error.network" = "Error de red: %@";
+"error.unauthorized" = "Acceso no autorizado";
+"error.server" = "Error del servidor: %@";
+"error.invalid_token" = "Token de acceso inválido";
+"error.invalid_role" = "Rol de usuario inválido";
+
+// MARK: - Loading
+"loading.orders" = "Cargando pedidos...";
+
+// MARK: - Empty State
+"empty.title" = "No se encontraron pedidos";
+"empty.message" = "No hay pedidos para mostrar en este momento.";

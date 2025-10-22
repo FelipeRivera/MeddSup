@@ -8,6 +8,7 @@
 import SwiftUI
 import ViewClientsModule
 import LoginModule
+import OrderStatusModule
 
 enum TabItem: CaseIterable {
     case home
@@ -80,13 +81,17 @@ struct TabBarView: View {
                 }
                 .tag(TabItem.search)
             
-            // Notifications Tab - Placeholder
-            NotificationsView()
-                .tabItem {
-                    Image(systemName: TabItem.notifications.systemImage)
-                    Text(TabItem.notifications.title)
-                }
-                .tag(TabItem.notifications)
+            // Notifications Tab - OrderStatusModule
+            OrderStatusModule.createOrderStatusView(
+                baseURL: baseURL,
+                token: token,
+                role: role
+            )
+            .tabItem {
+                Image(systemName: TabItem.notifications.systemImage)
+                Text(TabItem.notifications.title)
+            }
+            .tag(TabItem.notifications)
             
             // Profile Tab - Placeholder
             ProfileView(loginViewModel: loginViewModel)
