@@ -26,25 +26,64 @@ public class ViewClientsViewModel: ObservableObject {
     public init(clientService: ClientServiceProtocol = ClientService()) {
         self.clientService = clientService
         setupSearchDebounce()
+        setupDateFilter()
     }
     
     private func setupSearchDebounce() {
         searchCancellable = $searchText
             .debounce(for: .milliseconds(300), scheduler: RunLoop.main)
-            .sink { [weak self] searchText in
-                self?.filterClients(searchText: searchText)
+            .sink { [weak self] _ in
+                self?.applyFilters()
             }
     }
     
-    private func filterClients(searchText: String) {
-        if searchText.isEmpty {
-            filteredClients = clients
-        } else {
-            filteredClients = clients.filter { client in
-                client.name.localizedCaseInsensitiveContains(searchText) ||
-                client.address.localizedCaseInsensitiveContains(searchText)
+    private func setupDateFilter() {
+        $selectedDate
+            .dropFirst()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.applyFilters()
             }
+            .store(in: &cancellables)
+    }
+    
+    private func applyFilters() {
+        Task { @MainActor in
+            var result = clients
+            
+            // Filter by date
+            result = filterByDate(clients: result)
+            
+            // Filter by search text
+            if !searchText.isEmpty {
+                result = result.filter { client in
+                    client.name.localizedCaseInsensitiveContains(searchText) ||
+                    client.address.localizedCaseInsensitiveContains(searchText)
+                }
+            }
+            
+            filteredClients = result
         }
+    }
+    
+    private func filterByDate(clients: [Client]) -> [Client] {
+        let selectedDateString = formatDate(selectedDate)
+        
+        return clients.filter { client in
+            extractDate(from: client.schedule) == selectedDateString
+        }
+    }
+    
+    private func extractDate(from schedule: String) -> String? {
+        let components = schedule.components(separatedBy: " ")
+        if let dateString = components.first, dateString.count == 10 {
+            return dateString
+        }
+        return nil
+    }
+    
+    private func filterClients(searchText: String) {
+        applyFilters()
     }
     
     public func loadClients(baseURL: String, token: String, role: String) {
@@ -68,7 +107,7 @@ public class ViewClientsViewModel: ObservableObject {
                 },
                 receiveValue: { [weak self] clients in
                     self?.clients = clients
-                    self?.filteredClients = clients
+                    self?.applyFilters()
                 }
             )
             .store(in: &cancellables)
@@ -80,12 +119,16 @@ public class ViewClientsViewModel: ObservableObject {
     
     public func clearSearch() {
         searchText = ""
-        filteredClients = clients
+        applyFilters()
     }
     
     public func formatDate(_ date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter.string(from: date)
+    }
+    
+    public func refreshFilters() {
+        applyFilters()
     }
 }

@@ -13,7 +13,7 @@ import ViewClientsModule
 struct ContentView: View {
     let routesApi = RouteAPI(baseURL: URL(string: "http://localhost:8080")!)
     
-    @StateObject private var loginViewModel = LoginModule.createLoginViewModel(baseURL: "http://portal-web-alb-701001447.us-east-1.elb.amazonaws.com/auth")
+    @StateObject private var loginViewModel = LoginModule.createLoginViewModel(baseURL: "http://52.55.197.150/auth")
     
     var body: some View {
         Group {

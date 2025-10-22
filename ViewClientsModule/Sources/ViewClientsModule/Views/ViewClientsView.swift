@@ -48,6 +48,7 @@ public struct ViewClientsView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(String.localized("viewclients.date.picker.accept")) {
                         viewModel.selectedDate = tempSelectedDate
+                        viewModel.refreshFilters()
                         showingDatePicker = false
                     }
                     .fontWeight(.semibold)
