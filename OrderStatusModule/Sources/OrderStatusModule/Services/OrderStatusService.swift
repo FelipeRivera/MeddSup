@@ -21,9 +21,8 @@ public class OrderStatusService: @unchecked Sendable, OrderStatusServiceProtocol
     }
     
     public func fetchOrderStatus(request: OrderStatusRequest) async throws -> [OrderStatus] {
-        // Use the correct API endpoint
-        let apiURL = "http://52.55.197.150/orders/api/orders"
-        guard let url = URL(string: apiURL) else {
+        // Use the baseURL that is passed to the service
+        guard let url = URL(string: baseURL) else {
             throw OrderStatusError.invalidURL
         }
         
