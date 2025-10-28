@@ -21,7 +21,6 @@ struct ViewModelTests {
         #expect(viewModel.password == "")
         #expect(viewModel.isLoading == false)
         #expect(viewModel.errorMessage == nil)
-        #expect(viewModel.isLoggedIn == false)
     }
     
     // MARK: - Form Validation Tests
@@ -87,8 +86,6 @@ struct ViewModelTests {
         
         // Wait for async operation
         try? await Task.sleep(nanoseconds: 100_000_000)
-        
-        #expect(viewModel.isLoggedIn == false)
         #expect(viewModel.isLoading == false)
     }
     

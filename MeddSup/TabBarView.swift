@@ -8,6 +8,7 @@
 import SwiftUI
 import ViewClientsModule
 import LoginModule
+import OrderStatusModule
 
 enum TabItem: CaseIterable {
     case home
@@ -44,33 +45,19 @@ enum TabItem: CaseIterable {
 
 @available(iOS 15.0, *)
 struct TabBarView: View {
+    @EnvironmentObject private var configuration: ConfigurationManager
+    @EnvironmentObject private var moduleFactory: ModuleFactory
     @State private var selectedTab: TabItem = .home
-    @StateObject private var loginViewModel: LoginViewModel
-    
-    let baseURL: String
-    let token: String
-    let role: String
-    
-    init(baseURL: String, token: String, role: String, loginViewModel: LoginViewModel) {
-        self.baseURL = baseURL
-        self.token = token
-        self.role = role
-        self._loginViewModel = StateObject(wrappedValue: loginViewModel)
-    }
     
     var body: some View {
         TabView(selection: $selectedTab) {
             // Home Tab - ViewClientsModule
-            ViewClientsModule.createViewClientsView(
-                baseURL: baseURL,
-                token: token,
-                role: role
-            )
-            .tabItem {
-                Image(systemName: TabItem.home.systemImage)
-                Text(TabItem.home.title)
-            }
-            .tag(TabItem.home)
+            moduleFactory.createViewClientsModule()
+                .tabItem {
+                    Image(systemName: TabItem.home.systemImage)
+                    Text(TabItem.home.title)
+                }
+                .tag(TabItem.home)
             
             // Search Tab - Placeholder
             SearchView()
@@ -80,8 +67,8 @@ struct TabBarView: View {
                 }
                 .tag(TabItem.search)
             
-            // Notifications Tab - Placeholder
-            NotificationsView()
+            // Notifications Tab - OrderStatusModule
+            moduleFactory.createOrderStatusModule()
                 .tabItem {
                     Image(systemName: TabItem.notifications.systemImage)
                     Text(TabItem.notifications.title)
@@ -89,7 +76,8 @@ struct TabBarView: View {
                 .tag(TabItem.notifications)
             
             // Profile Tab - Placeholder
-            ProfileView(loginViewModel: loginViewModel)
+            ProfileView()
+                .environmentObject(configuration)
                 .tabItem {
                     Image(systemName: TabItem.profile.systemImage)
                     Text(TabItem.profile.title)
@@ -103,42 +91,20 @@ struct TabBarView: View {
 // MARK: - Placeholder Views
 struct SearchView: View {
     var body: some View {
-        VStack {
+        VStack(spacing: 20) {
             Image(systemName: "magnifyingglass")
-                .font(.system(size: 60))
+                .font(.system(size: 80))
                 .foregroundColor(.gray)
             
-            Text(ViewClientsLocalizationHelper.shared.localizedString(for: "placeholder.search.title"))
+            Text(ViewClientsLocalizationHelper.shared.localizedString(for: "tabbar.search"))
                 .font(.title2)
                 .fontWeight(.semibold)
             
-            Text(ViewClientsLocalizationHelper.shared.localizedString(for: "placeholder.search.message"))
+            Text(ViewClientsLocalizationHelper.shared.localizedString(for: "tabbar.search.description"))
                 .font(.body)
-                .foregroundColor(.gray)
+                .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
-                .padding(.horizontal)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.gray.opacity(0.05))
-    }
-}
-
-struct NotificationsView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "bell")
-                .font(.system(size: 60))
-                .foregroundColor(.gray)
-            
-            Text(ViewClientsLocalizationHelper.shared.localizedString(for: "placeholder.notifications.title"))
-                .font(.title2)
-                .fontWeight(.semibold)
-            
-            Text(ViewClientsLocalizationHelper.shared.localizedString(for: "placeholder.notifications.message"))
-                .font(.body)
-                .foregroundColor(.gray)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal)
+                .padding(.horizontal, 40)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.gray.opacity(0.05))
@@ -146,7 +112,8 @@ struct NotificationsView: View {
 }
 
 struct ProfileView: View {
-    @ObservedObject var loginViewModel: LoginViewModel
+    @EnvironmentObject private var configuration: ConfigurationManager
+    @EnvironmentObject private var loginViewModel: LoginViewModel
     
     var body: some View {
         VStack(spacing: 20) {
@@ -159,6 +126,8 @@ struct ProfileView: View {
                 .fontWeight(.semibold)
             
             Button(ViewClientsLocalizationHelper.shared.localizedString(for: "tabbar.profile.logout")) {
+                // Clear both configuration and login view model
+                configuration.clearUserSession()
                 loginViewModel.logout()
             }
             .font(.system(size: 16, weight: .medium))
@@ -174,10 +143,8 @@ struct ProfileView: View {
 }
 
 #Preview {
-    TabBarView(
-        baseURL: "http://localhost:8080",
-        token: "mock_token",
-        role: "user",
-        loginViewModel: LoginModule.createLoginViewModel(baseURL: "http://localhost:8080")
-    )
+    TabBarView()
+        .environmentObject(ConfigurationManager.shared)
+        .environmentObject(ModuleFactory())
+        .environmentObject(LoginModule.createLoginViewModel(baseURL: "http://localhost:8080"))
 }

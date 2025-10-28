@@ -8,25 +8,38 @@
 import SwiftUI
 import RouteMapKit
 import LoginModule
-import ViewClientsModule
 
 struct ContentView: View {
-    let routesApi = RouteAPI(baseURL: URL(string: "http://localhost:8080")!)
+    @StateObject private var configuration = ConfigurationManager.shared
+    @StateObject private var moduleFactory = ModuleFactory()
+    @StateObject private var loginViewModel: LoginViewModel
     
-    @StateObject private var loginViewModel = LoginModule.createLoginViewModel(baseURL: "http://52.55.197.150/auth")
+    init() {
+        // Initialize login view model with configuration
+        let loginVM = LoginModule.createLoginViewModel(
+            baseURL: ConfigurationManager.shared.endpoints.authBaseURL
+        )
+        self._loginViewModel = StateObject(wrappedValue: loginVM)
+    }
     
     var body: some View {
         Group {
-            if loginViewModel.isLoggedIn {
-                TabBarView(
-                    baseURL: "http://portal-web-alb-701001447.us-east-1.elb.amazonaws.com",
-                    token: loginViewModel.authToken ?? "",
-                    role: loginViewModel.userRole ?? "user",
-                    loginViewModel: loginViewModel
-                )
+            if configuration.userSession != nil {
+                TabBarView()
+                    .environmentObject(configuration)
+                    .environmentObject(moduleFactory)
+                    .environmentObject(loginViewModel)
             } else {
                 LoginView()
                     .environmentObject(loginViewModel)
+                    .onReceive(loginViewModel.$isLoggedIn) { isLoggedIn in
+                        if isLoggedIn {
+                            configuration.updateUserSession(
+                                token: loginViewModel.authToken ?? "",
+                                role: loginViewModel.userRole ?? "user"
+                            )
+                        }
+                    }
             }
         }
     }
