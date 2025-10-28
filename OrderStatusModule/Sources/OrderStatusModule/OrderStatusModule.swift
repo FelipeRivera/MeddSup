@@ -17,4 +17,14 @@ public struct OrderStatusModule {
     public static func createOrderStatusViewModel(baseURL: String, token: String, role: String) -> OrderStatusViewModel {
         OrderStatusViewModel(baseURL: baseURL, token: token, role: role)
     }
+    
+    // Helper method to get token from UserDefaults
+    public static func getStoredToken() -> String? {
+        return UserDefaults.standard.string(forKey: "access_token")
+    }
+    
+    // Helper method to get role from UserDefaults
+    public static func getStoredRole() -> String? {
+        return UserDefaults.standard.string(forKey: "user_role")
+    }
 }

@@ -35,9 +35,9 @@ public class OrderStatusViewModel: ObservableObject {
         
         do {
             let request = OrderStatusRequest(accessToken: token, role: role)
-            let response = try await service.fetchOrderStatus(request: request)
+            let orders = try await service.fetchOrderStatus(request: request)
             
-            orders = response.orders
+            self.orders = orders
             filteredOrders = orders
         } catch {
             errorMessage = error.localizedDescription

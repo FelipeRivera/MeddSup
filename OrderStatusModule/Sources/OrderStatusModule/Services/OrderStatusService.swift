@@ -8,47 +8,77 @@
 import Foundation
 
 public protocol OrderStatusServiceProtocol: Sendable {
-    func fetchOrderStatus(request: OrderStatusRequest) async throws -> OrderStatusResponse
+    func fetchOrderStatus(request: OrderStatusRequest) async throws -> [OrderStatus]
 }
 
 public class OrderStatusService: @unchecked Sendable, OrderStatusServiceProtocol {
     private let baseURL: String
+    private let session: URLSession
     
-    public init(baseURL: String) {
+    public init(baseURL: String, session: URLSession = URLSession.shared) {
         self.baseURL = baseURL
+        self.session = session
     }
     
-    public func fetchOrderStatus(request: OrderStatusRequest) async throws -> OrderStatusResponse {
-        // Simulate network delay
-        try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+    public func fetchOrderStatus(request: OrderStatusRequest) async throws -> [OrderStatus] {
+        // Use the correct API endpoint
+        let apiURL = "http://52.55.197.150/orders/api/orders"
+        guard let url = URL(string: apiURL) else {
+            throw OrderStatusError.invalidURL
+        }
         
-        // Mock data based on the image provided
-        let mockOrders = [
-            OrderStatus(id: "1", orderId: "12345", statusId: "En preparacion"),
-            OrderStatus(id: "2", orderId: "67890", statusId: "transito"),
-            OrderStatus(id: "3", orderId: "54321", statusId: "entregado"),
-            OrderStatus(id: "4", orderId: "98765", statusId: "pendiente"),
-            OrderStatus(id: "5", orderId: "11111", statusId: "En preparacion"),
-            OrderStatus(id: "6", orderId: "22222", statusId: "transito")
-        ]
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "GET"
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
+        urlRequest.setValue("Bearer \(request.accessToken)", forHTTPHeaderField: "Authorization")
+        urlRequest.setValue("cust-1", forHTTPHeaderField: "X-Customer-Id")
+        urlRequest.cachePolicy = .reloadIgnoringLocalCacheData
         
-        return OrderStatusResponse(orders: mockOrders)
+        do {
+            let (data, response) = try await session.data(for: urlRequest)
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                throw OrderStatusError.networkError("Invalid response")
+            }
+            
+            switch httpResponse.statusCode {
+            case 200:
+                do {
+                    // The API returns an array directly
+                    let orders = try JSONDecoder().decode([OrderStatus].self, from: data)
+                    return orders
+                } catch {
+                    print("Decoding error: \(error)")
+                    throw OrderStatusError.decodingError
+                }
+            case 401:
+                throw OrderStatusError.unauthorized
+            case 403:
+                throw OrderStatusError.invalidToken
+            default:
+                throw OrderStatusError.serverError(httpResponse.statusCode)
+            }
+        } catch let error as OrderStatusError {
+            throw error
+        } catch {
+            throw OrderStatusError.networkError(error.localizedDescription)
+        }
     }
 }
 
 // MARK: - Mock Service for Testing
 public class MockOrderStatusService: @unchecked Sendable, OrderStatusServiceProtocol {
-    private let mockResponse: OrderStatusResponse
+    private let mockOrders: [OrderStatus]
     private let shouldFail: Bool
     private let error: OrderStatusError?
     
-    public init(mockResponse: OrderStatusResponse = OrderStatusResponse(orders: []), shouldFail: Bool = false, error: OrderStatusError? = nil) {
-        self.mockResponse = mockResponse
+    public init(mockOrders: [OrderStatus] = [], shouldFail: Bool = false, error: OrderStatusError? = nil) {
+        self.mockOrders = mockOrders
         self.shouldFail = shouldFail
         self.error = error
     }
     
-    public func fetchOrderStatus(request: OrderStatusRequest) async throws -> OrderStatusResponse {
+    public func fetchOrderStatus(request: OrderStatusRequest) async throws -> [OrderStatus] {
         if shouldFail {
             throw error ?? OrderStatusError.networkError("Mock error")
         }
@@ -56,6 +86,35 @@ public class MockOrderStatusService: @unchecked Sendable, OrderStatusServiceProt
         // Simulate network delay
         try await Task.sleep(nanoseconds: 500_000_000) // 0.5 seconds
         
-        return mockResponse
+        return mockOrders
+    }
+    
+    // Convenience initializer for creating mock data
+    public static func createMockService() -> MockOrderStatusService {
+        let mockOrders = [
+            OrderStatus(
+                orderId: "ORD-1001", 
+                statusId: "transito", 
+                createdAt: "2025-10-28T16:29:25.060500+00:00",
+                items: [],
+                monto: 0.0
+            ),
+            OrderStatus(
+                orderId: "ORD-1002", 
+                statusId: "En preparacion", 
+                createdAt: "2025-10-28T15:30:00.000000+00:00",
+                items: [],
+                monto: 150.0
+            ),
+            OrderStatus(
+                orderId: "ORD-1003", 
+                statusId: "entregado", 
+                createdAt: "2025-10-27T14:20:00.000000+00:00",
+                items: [],
+                monto: 75.5
+            )
+        ]
+        
+        return MockOrderStatusService(mockOrders: mockOrders)
     }
 }

@@ -20,22 +20,43 @@ public struct OrderStatusRequest: Sendable, Codable {
 
 // MARK: - Order Status Response
 public struct OrderStatus: Sendable, Codable, Identifiable {
-    public let id: String
     public let orderId: String
     public let statusId: String
+    public let createdAt: String
+    public let items: [OrderItem]
+    public let monto: Double
     
-    public init(id: String, orderId: String, statusId: String) {
-        self.id = id
+    // Use orderId as the id for Identifiable
+    public var id: String { orderId }
+    
+    enum CodingKeys: String, CodingKey {
+        case orderId = "order_number"
+        case statusId = "status"
+        case createdAt = "created_at"
+        case items
+        case monto
+    }
+    
+    public init(orderId: String, statusId: String, createdAt: String, items: [OrderItem], monto: Double) {
         self.orderId = orderId
         self.statusId = statusId
+        self.createdAt = createdAt
+        self.items = items
+        self.monto = monto
     }
 }
 
-public struct OrderStatusResponse: Sendable, Codable {
-    public let orders: [OrderStatus]
+public struct OrderItem: Sendable, Codable {
+    public let id: String
+    public let name: String
+    public let quantity: Int
+    public let price: Double
     
-    public init(orders: [OrderStatus]) {
-        self.orders = orders
+    public init(id: String, name: String, quantity: Int, price: Double) {
+        self.id = id
+        self.name = name
+        self.quantity = quantity
+        self.price = price
     }
 }
 
