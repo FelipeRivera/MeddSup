@@ -13,27 +13,49 @@ public class OrderStatusLocalizationHelper: @unchecked Sendable {
     private let bundle: Bundle
     
     private init() {
-        guard let bundlePath = Bundle.module.path(forResource: "en", ofType: "lproj"),
-              let bundle = Bundle(path: bundlePath) else {
-            self.bundle = Bundle.module
-            return
+        // Resolve best matching localization bundle based on device preferences
+        let preferredLanguages = Locale.preferredLanguages
+        var resolvedBundle: Bundle? = nil
+        for code in preferredLanguages {
+            if let path = Bundle.module.path(forResource: code, ofType: "lproj"),
+               let langBundle = Bundle(path: path) {
+                resolvedBundle = langBundle
+                break
+            }
+            if let prefix = code.split(separator: "-").first,
+               let path = Bundle.module.path(forResource: String(prefix), ofType: "lproj"),
+               let langBundle = Bundle(path: path) {
+                resolvedBundle = langBundle
+                break
+            }
         }
-        self.bundle = bundle
+        self.bundle = resolvedBundle ?? Bundle.module
+    }
+    
+    public func localizedString(for key: String) -> String {
+        return NSLocalizedString(key, bundle: bundle, comment: "")
+    }
+    
+    public func localizedString(for key: String, arguments: [CVarArg]) -> String {
+        let format = NSLocalizedString(key, bundle: bundle, comment: "")
+        return String(format: format, arguments: arguments)
     }
     
     public func localizedString(for key: String, arguments: CVarArg...) -> String {
-        let localizedString = NSLocalizedString(key, bundle: bundle, comment: "")
-        
         if arguments.isEmpty {
-            return localizedString
+            return localizedString(for: key)
         } else {
-            return String(format: localizedString, arguments: arguments)
+            return localizedString(for: key, arguments: arguments)
         }
     }
 }
 
 extension String {
-    public static func localized(_ key: String, arguments: CVarArg...) -> String {
+    public static func localized(_ key: String) -> String {
+        return OrderStatusLocalizationHelper.shared.localizedString(for: key)
+    }
+    
+    public static func localized(_ key: String, _ arguments: CVarArg...) -> String {
         return OrderStatusLocalizationHelper.shared.localizedString(for: key, arguments: arguments)
     }
 }

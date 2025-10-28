@@ -7,6 +7,8 @@
 
 // MARK: - Screen Title
 "screen.title" = "Consulta de estado de pedidos";
+"app.name" = "MeddiSuply";
+"appbar.my_orders" = "Mis Pedidos";
 
 // MARK: - Search
 "search.placeholder" = "Buscar por ID";

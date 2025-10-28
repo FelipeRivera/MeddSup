@@ -56,7 +56,7 @@ public struct OrderStatusView: View {
                 HStack(spacing: 8) {
                     Image(systemName: "bag")
                         .foregroundColor(.black)
-                    Text("MeddiSuply")
+                    Text(OrderStatusLocalizationHelper.shared.localizedString(for: "app.name"))
                         .font(.headline)
                         .fontWeight(.semibold)
                         .foregroundColor(.black)
@@ -64,7 +64,7 @@ public struct OrderStatusView: View {
                 
                 Spacer()
                 
-                Text("Mis Pedidos")
+                Text(OrderStatusLocalizationHelper.shared.localizedString(for: "appbar.my_orders"))
                     .font(.headline)
                     .fontWeight(.medium)
                     .foregroundColor(.black)
