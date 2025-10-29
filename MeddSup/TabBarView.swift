@@ -47,6 +47,7 @@ enum TabItem: CaseIterable {
 struct TabBarView: View {
     @EnvironmentObject private var configuration: ConfigurationManager
     @EnvironmentObject private var moduleFactory: ModuleFactory
+    @EnvironmentObject private var loginViewModel: LoginViewModel
     @State private var selectedTab: TabItem = .home
     
     var body: some View {
@@ -78,6 +79,7 @@ struct TabBarView: View {
             // Profile Tab - Placeholder
             ProfileView()
                 .environmentObject(configuration)
+                .environmentObject(loginViewModel)
                 .tabItem {
                     Image(systemName: TabItem.profile.systemImage)
                     Text(TabItem.profile.title)
@@ -114,6 +116,8 @@ struct SearchView: View {
 struct ProfileView: View {
     @EnvironmentObject private var configuration: ConfigurationManager
     @EnvironmentObject private var loginViewModel: LoginViewModel
+    @EnvironmentObject private var moduleFactory: ModuleFactory
+    @State private var showCreateOrder = false
     
     var body: some View {
         VStack(spacing: 20) {
@@ -124,6 +128,16 @@ struct ProfileView: View {
             Text(ViewClientsLocalizationHelper.shared.localizedString(for: "tabbar.profile"))
                 .font(.title2)
                 .fontWeight(.semibold)
+            
+            Button(ViewClientsLocalizationHelper.shared.localizedString(for: "tabbar.profile.create.order")) {
+                showCreateOrder = true
+            }
+            .font(.system(size: 16, weight: .medium))
+            .foregroundColor(.white)
+            .padding(.horizontal, 24)
+            .padding(.vertical, 12)
+            .background(Color.blue)
+            .cornerRadius(8)
             
             Button(ViewClientsLocalizationHelper.shared.localizedString(for: "tabbar.profile.logout")) {
                 // Clear both configuration and login view model
@@ -139,6 +153,11 @@ struct ProfileView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.gray.opacity(0.05))
+        .sheet(isPresented: $showCreateOrder) {
+            NavigationView {
+                moduleFactory.createCreateOrderModule()
+            }
+        }
     }
 }
 

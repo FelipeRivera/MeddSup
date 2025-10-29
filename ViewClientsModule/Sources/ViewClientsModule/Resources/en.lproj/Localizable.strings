@@ -25,6 +25,7 @@
 "tabbar.search" = "Search";
 "tabbar.notifications" = "Notifications";
 "tabbar.profile" = "Profile";
+"tabbar.profile.create.order" = "Create Order";
 "tabbar.profile.logout" = "Log Out";
 
 // MARK: - Placeholder Views
