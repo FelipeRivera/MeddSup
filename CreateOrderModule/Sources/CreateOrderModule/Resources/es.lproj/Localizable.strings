@@ -10,7 +10,7 @@
 "createorder.catalog.title" = "Catálogo de Productos";
 "createorder.summary.title" = "Resumen del Pedido";
 "createorder.quantity.label" = "Cantidad";
-"createorder.modify.button" = "Modificar";
+"createorder.clear.cart.button" = "Vaciar Canasta";
 "createorder.confirm.button" = "Confirmar";
 "createorder.total.label" = "Total";
 
