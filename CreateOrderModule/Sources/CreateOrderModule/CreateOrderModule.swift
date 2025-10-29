@@ -26,4 +26,9 @@ public enum CreateOrderModule {
         let service = CreateOrderService(baseURL: baseURL)
         return CreateOrderViewModel(service: service, token: token)
     }
+    
+    // MARK: - Helper Methods
+    public static func getStoredToken() -> String? {
+        return UserDefaults.standard.string(forKey: "access_token")
+    }
 }

@@ -21,7 +21,7 @@ public class ConfigurationManager: ObservableObject {
             authBaseURL: String = "http://52.55.197.150/auth",
             portalBaseURL: String = "http://portal-web-alb-701001447.us-east-1.elb.amazonaws.com",
             ordersAPIURL: String = "http://52.55.197.150/orders/api/orders",
-            createOrderAPIURL: String = "http://52.55.197.150/api/orders"
+            createOrderAPIURL: String = "http://52.55.197.150/orders/api/orders"
         ) {
             self.authBaseURL = authBaseURL
             self.portalBaseURL = portalBaseURL

@@ -55,14 +55,14 @@ public class ModuleFactory: ObservableObject {
     }
     
     public func createCreateOrderModule() -> some View {
-        guard let session = configuration.userSession else {
+        guard let token = CreateOrderModule.getStoredToken() else {
             return AnyView(EmptyView())
         }
         
         return AnyView(
             CreateOrderModule.createCreateOrderView(
                 baseURL: configuration.endpoints.createOrderAPIURL,
-                token: session.token
+                token: token
             )
         )
     }
