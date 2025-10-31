@@ -9,6 +9,7 @@ import SwiftUI
 import LoginModule
 import ViewClientsModule
 import OrderStatusModule
+import CreateOrderModule
 
 @MainActor
 public class ModuleFactory: ObservableObject {
@@ -49,6 +50,19 @@ public class ModuleFactory: ObservableObject {
                 baseURL: configuration.endpoints.ordersAPIURL,
                 token: session.token,
                 role: session.role
+            )
+        )
+    }
+    
+    public func createCreateOrderModule() -> some View {
+        guard let token = CreateOrderModule.getStoredToken() else {
+            return AnyView(EmptyView())
+        }
+        
+        return AnyView(
+            CreateOrderModule.createCreateOrderView(
+                baseURL: configuration.endpoints.createOrderAPIURL,
+                token: token
             )
         )
     }

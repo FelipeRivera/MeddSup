@@ -1,0 +1,21 @@
+/*
+  Localizable.strings
+  CreateOrderModule
+
+  Created by Felipe Rivera on 3/09/25.
+*/
+
+// MARK: - UI Labels
+"createorder.title" = "Crear Pedido";
+"createorder.catalog.title" = "Catálogo de Productos";
+"createorder.summary.title" = "Resumen del Pedido";
+"createorder.quantity.label" = "Cantidad";
+"createorder.clear.cart.button" = "Vaciar Canasta";
+"createorder.confirm.button" = "Confirmar";
+"createorder.total.label" = "Total";
+
+// MARK: - Messages
+"createorder.success" = "Pedido creado exitosamente";
+"createorder.error" = "Error al crear el pedido";
+"createorder.enter.products" = "Por favor seleccione productos para crear un pedido";
+
