@@ -42,6 +42,7 @@
 		8044E6F82E692D3900AB4DEE /* MeddSupUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MeddSupUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8048D16F2E974D270059E492 /* LoginModule */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LoginModule; sourceTree = SOURCE_ROOT; };
 		80B3D7132EB1527C00E1CA5F /* CreateOrderModule */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = CreateOrderModule; sourceTree = SOURCE_ROOT; };
+		80DAEBB32EBD053000446815 /* customerRegistrationModule */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = customerRegistrationModule; sourceTree = SOURCE_ROOT; };
 		80E198B42E9DC3F300A5BC21 /* ViewClientsModule */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ViewClientsModule; sourceTree = SOURCE_ROOT; };
 		80E85D632EA8664F00773ADD /* OrderStatusModule */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = OrderStatusModule; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -144,6 +145,7 @@
 		8048D16E2E974C330059E492 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				80DAEBB32EBD053000446815 /* customerRegistrationModule */,
 				80B3D7132EB1527C00E1CA5F /* CreateOrderModule */,
 				80E85D632EA8664F00773ADD /* OrderStatusModule */,
 				80E198B42E9DC3F300A5BC21 /* ViewClientsModule */,
