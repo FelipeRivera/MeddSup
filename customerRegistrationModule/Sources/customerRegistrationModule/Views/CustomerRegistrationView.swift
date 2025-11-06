@@ -116,6 +116,11 @@ public struct CustomerRegistrationView: View {
                                     .padding(.vertical, 12)
                                     .background(Color.white)
                                     .cornerRadius(8)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                                    )
+                                    .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 2)
                                 }
                                 
                                 if let errorMessage = viewModel.countryError {
@@ -169,6 +174,7 @@ public struct CustomerRegistrationView: View {
                     }
                     .background(Color.white)
                     .cornerRadius(12)
+                    .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 20)
                 }
@@ -235,6 +241,21 @@ public struct FormField: View {
                 .padding(.vertical, 12)
                 .background(Color.white)
                 .cornerRadius(8)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(
+                            focusedField == field ? Color.blue : Color.gray.opacity(0.3),
+                            lineWidth: focusedField == field ? 1.5 : 1
+                        )
+                )
+                .shadow(
+                    color: focusedField == field 
+                        ? Color.blue.opacity(0.1) 
+                        : Color.black.opacity(0.05),
+                    radius: focusedField == field ? 4 : 2,
+                    x: 0,
+                    y: 2
+                )
                 .focused($focusedField, equals: field)
                 .onChange(of: focusedField) { newValue in
                     // When field loses focus, mark it as touched
