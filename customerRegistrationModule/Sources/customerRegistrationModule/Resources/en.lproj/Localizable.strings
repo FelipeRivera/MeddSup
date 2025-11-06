@@ -32,4 +32,5 @@
 "customerregistration.success.message" = "Client registered successfully";
 "customerregistration.error.title" = "Error";
 "customerregistration.error.validation.empty.fields" = "All fields are required";
+"customerregistration.error.field.required" = "This field cannot be empty";
 

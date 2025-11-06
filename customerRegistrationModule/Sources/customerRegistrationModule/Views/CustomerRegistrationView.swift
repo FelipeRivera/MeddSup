@@ -11,8 +11,16 @@ public struct CustomerRegistrationView: View {
     @StateObject private var viewModel: CustomerRegistrationViewModel
     @Environment(\.dismiss) private var dismiss
     @State private var showCountryPicker = false
+    @FocusState private var focusedField: Field?
     
     private let localizationHelper = CustomerRegistrationLocalizationHelper.shared
+    
+    public enum Field {
+        case institutionName
+        case taxId
+        case address
+        case mainContact
+    }
     
     public init(viewModel: CustomerRegistrationViewModel) {
         self._viewModel = StateObject(wrappedValue: viewModel)
@@ -46,21 +54,39 @@ public struct CustomerRegistrationView: View {
                             FormField(
                                 label: localizationHelper.localizedString(for: "customerregistration.field.institution.name"),
                                 placeholder: localizationHelper.localizedString(for: "customerregistration.placeholder.enter.name"),
-                                text: $viewModel.institutionName
+                                text: $viewModel.institutionName,
+                                errorMessage: viewModel.institutionNameError,
+                                field: .institutionName,
+                                focusedField: $focusedField,
+                                onFieldTouched: {
+                                    viewModel.institutionNameTouched = true
+                                }
                             )
                             
                             // Tax ID
                             FormField(
                                 label: localizationHelper.localizedString(for: "customerregistration.field.tax.id"),
                                 placeholder: localizationHelper.localizedString(for: "customerregistration.placeholder.enter.identification"),
-                                text: $viewModel.taxId
+                                text: $viewModel.taxId,
+                                errorMessage: viewModel.taxIdError,
+                                field: .taxId,
+                                focusedField: $focusedField,
+                                onFieldTouched: {
+                                    viewModel.taxIdTouched = true
+                                }
                             )
                             
                             // Address
                             FormField(
                                 label: localizationHelper.localizedString(for: "customerregistration.field.address"),
                                 placeholder: localizationHelper.localizedString(for: "customerregistration.placeholder.enter.address"),
-                                text: $viewModel.address
+                                text: $viewModel.address,
+                                errorMessage: viewModel.addressError,
+                                field: .address,
+                                focusedField: $focusedField,
+                                onFieldTouched: {
+                                    viewModel.addressTouched = true
+                                }
                             )
                             
                             // Country Picker
@@ -70,14 +96,15 @@ public struct CustomerRegistrationView: View {
                                     .foregroundColor(.black)
                                 
                                 Button(action: {
+                                    viewModel.countryTouched = true
                                     showCountryPicker = true
                                 }) {
                                     HStack {
                                         Text(viewModel.selectedCountry == nil 
                                              ? localizationHelper.localizedString(for: "customerregistration.placeholder.enter.country")
                                              : getCountryName(for: viewModel.selectedCountry!))
-                                            .font(.system(size: 16))
-                                            .foregroundColor(viewModel.selectedCountry == nil ? .gray : .black)
+                                        .font(.system(size: 16))
+                                        .foregroundColor(viewModel.selectedCountry == nil ? .gray : .black)
                                         
                                         Spacer()
                                         
@@ -90,13 +117,26 @@ public struct CustomerRegistrationView: View {
                                     .background(Color.white)
                                     .cornerRadius(8)
                                 }
+                                
+                                if let errorMessage = viewModel.countryError {
+                                    Text(errorMessage)
+                                        .font(.system(size: 12))
+                                        .foregroundColor(.red)
+                                        .padding(.leading, 4)
+                                }
                             }
                             
                             // Main Contact
                             FormField(
                                 label: localizationHelper.localizedString(for: "customerregistration.field.main.contact"),
                                 placeholder: localizationHelper.localizedString(for: "customerregistration.placeholder.enter.main.contact"),
-                                text: $viewModel.mainContact
+                                text: $viewModel.mainContact,
+                                errorMessage: viewModel.mainContactError,
+                                field: .mainContact,
+                                focusedField: $focusedField,
+                                onFieldTouched: {
+                                    viewModel.mainContactTouched = true
+                                }
                             )
                         }
                         .padding(.horizontal, 20)
@@ -172,12 +212,18 @@ public struct CustomerRegistrationView: View {
 }
 
 // MARK: - Form Field Component
-private struct FormField: View {
+public struct FormField: View {
     let label: String
     let placeholder: String
     @Binding var text: String
+    let errorMessage: String?
+    let field: CustomerRegistrationView.Field
+    @FocusState.Binding var focusedField: CustomerRegistrationView.Field?
+    let onFieldTouched: () -> Void
     
-    var body: some View {
+    @State var previousFocusState: CustomerRegistrationView.Field?
+    
+    public var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(label)
                 .font(.system(size: 14, weight: .medium))
@@ -189,6 +235,21 @@ private struct FormField: View {
                 .padding(.vertical, 12)
                 .background(Color.white)
                 .cornerRadius(8)
+                .focused($focusedField, equals: field)
+                .onChange(of: focusedField) { newValue in
+                    // When field loses focus, mark it as touched
+                    if let previous = previousFocusState, previous == field && newValue != field {
+                        onFieldTouched()
+                    }
+                    previousFocusState = newValue
+                }
+            
+            if let errorMessage = errorMessage {
+                Text(errorMessage)
+                    .font(.system(size: 12))
+                    .foregroundColor(.red)
+                    .padding(.leading, 4)
+            }
         }
     }
 }

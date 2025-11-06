@@ -20,6 +20,13 @@ public final class CustomerRegistrationViewModel: ObservableObject {
     @Published public var errorMessage: String?
     @Published public var showSuccessAlert: Bool = false
     
+    // MARK: - Field Validation States
+    @Published public var institutionNameTouched: Bool = false
+    @Published public var taxIdTouched: Bool = false
+    @Published public var addressTouched: Bool = false
+    @Published public var countryTouched: Bool = false
+    @Published public var mainContactTouched: Bool = false
+    
     // MARK: - Private Properties
     private let service: CustomerRegistrationServiceProtocol
     private let token: String
@@ -78,10 +85,52 @@ public final class CustomerRegistrationViewModel: ObservableObject {
         address = ""
         selectedCountry = nil
         mainContact = ""
+        // Reset touched states
+        institutionNameTouched = false
+        taxIdTouched = false
+        addressTouched = false
+        countryTouched = false
+        mainContactTouched = false
     }
     
     public func clearError() {
         errorMessage = nil
+    }
+    
+    // MARK: - Field Validation Methods
+    public var institutionNameError: String? {
+        guard institutionNameTouched else { return nil }
+        return institutionName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            ? localizationHelper.localizedString(for: "customerregistration.error.field.required")
+            : nil
+    }
+    
+    public var taxIdError: String? {
+        guard taxIdTouched else { return nil }
+        return taxId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            ? localizationHelper.localizedString(for: "customerregistration.error.field.required")
+            : nil
+    }
+    
+    public var addressError: String? {
+        guard addressTouched else { return nil }
+        return address.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            ? localizationHelper.localizedString(for: "customerregistration.error.field.required")
+            : nil
+    }
+    
+    public var countryError: String? {
+        guard countryTouched else { return nil }
+        return selectedCountry == nil
+            ? localizationHelper.localizedString(for: "customerregistration.error.field.required")
+            : nil
+    }
+    
+    public var mainContactError: String? {
+        guard mainContactTouched else { return nil }
+        return mainContact.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            ? localizationHelper.localizedString(for: "customerregistration.error.field.required")
+            : nil
     }
 }
 

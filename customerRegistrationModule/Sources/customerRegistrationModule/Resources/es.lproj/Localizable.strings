@@ -32,4 +32,5 @@
 "customerregistration.success.message" = "Cliente registrado exitosamente";
 "customerregistration.error.title" = "Error";
 "customerregistration.error.validation.empty.fields" = "Todos los campos son requeridos";
+"customerregistration.error.field.required" = "Este campo no puede estar vacío";
 
