@@ -14,6 +14,7 @@
 		8044E70E2E692DDD00AB4DEE /* RouteMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8044E70D2E692DDD00AB4DEE /* RouteMapKit */; };
 		8048D1752E9751CB0059E492 /* LoginModule in Frameworks */ = {isa = PBXBuildFile; productRef = 8048D1742E9751CB0059E492 /* LoginModule */; };
 		8064BE622EB2946100BE1CCA /* CreateOrderModule in Frameworks */ = {isa = PBXBuildFile; productRef = 8064BE612EB2946100BE1CCA /* CreateOrderModule */; };
+		80DAEBB52EBD0A9F00446815 /* customerRegistrationModule in Frameworks */ = {isa = PBXBuildFile; productRef = 80DAEBB42EBD0A9F00446815 /* customerRegistrationModule */; };
 		80E112C22E99E33700819086 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 80E112C12E99E33700819086 /* FirebaseCore */; };
 		80E198B82E9DC8E800A5BC21 /* ViewClientsModule in Frameworks */ = {isa = PBXBuildFile; productRef = 80E198B72E9DC8E800A5BC21 /* ViewClientsModule */; };
 		80E85D652EA8668600773ADD /* OrderStatusModule in Frameworks */ = {isa = PBXBuildFile; productRef = 80E85D642EA8668600773ADD /* OrderStatusModule */; };
@@ -84,6 +85,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8048D1752E9751CB0059E492 /* LoginModule in Frameworks */,
+				80DAEBB52EBD0A9F00446815 /* customerRegistrationModule in Frameworks */,
 				803C44492E98A5A90074DAAF /* FirebasePerformance in Frameworks */,
 				8044E70E2E692DDD00AB4DEE /* RouteMapKit in Frameworks */,
 				80E85D652EA8668600773ADD /* OrderStatusModule in Frameworks */,
@@ -185,6 +187,7 @@
 				80E198B72E9DC8E800A5BC21 /* ViewClientsModule */,
 				80E85D642EA8668600773ADD /* OrderStatusModule */,
 				8064BE612EB2946100BE1CCA /* CreateOrderModule */,
+				80DAEBB42EBD0A9F00446815 /* customerRegistrationModule */,
 			);
 			productName = MeddSup;
 			productReference = 8044E6DD2E692D3800AB4DEE /* MeddSup.app */;
@@ -747,6 +750,10 @@
 		8064BE612EB2946100BE1CCA /* CreateOrderModule */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CreateOrderModule;
+		};
+		80DAEBB42EBD0A9F00446815 /* customerRegistrationModule */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = customerRegistrationModule;
 		};
 		80E112C12E99E33700819086 /* FirebaseCore */ = {
 			isa = XCSwiftPackageProductDependency;

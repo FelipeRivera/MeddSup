@@ -10,6 +10,7 @@ import LoginModule
 import ViewClientsModule
 import OrderStatusModule
 import CreateOrderModule
+import customerRegistrationModule
 
 @MainActor
 public class ModuleFactory: ObservableObject {
@@ -62,6 +63,19 @@ public class ModuleFactory: ObservableObject {
         return AnyView(
             CreateOrderModule.createCreateOrderView(
                 baseURL: configuration.endpoints.createOrderAPIURL,
+                token: token
+            )
+        )
+    }
+    
+    public func createCustomerRegistrationModule() -> some View {
+        guard let token = CustomerRegistrationModule.getStoredToken() else {
+            return AnyView(EmptyView())
+        }
+        
+        return AnyView(
+            CustomerRegistrationModule.createCustomerRegistrationView(
+                baseURL: configuration.endpoints.clientsAPIURL,
                 token: token
             )
         )

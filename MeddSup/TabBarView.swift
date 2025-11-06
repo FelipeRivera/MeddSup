@@ -118,6 +118,7 @@ struct ProfileView: View {
     @EnvironmentObject private var loginViewModel: LoginViewModel
     @EnvironmentObject private var moduleFactory: ModuleFactory
     @State private var showCreateOrder = false
+    @State private var showCustomerRegistration = false
     
     var body: some View {
         VStack(spacing: 20) {
@@ -128,6 +129,16 @@ struct ProfileView: View {
             Text(ViewClientsLocalizationHelper.shared.localizedString(for: "tabbar.profile"))
                 .font(.title2)
                 .fontWeight(.semibold)
+            
+            Button(ViewClientsLocalizationHelper.shared.localizedString(for: "tabbar.profile.register.client")) {
+                showCustomerRegistration = true
+            }
+            .font(.system(size: 16, weight: .medium))
+            .foregroundColor(.white)
+            .padding(.horizontal, 24)
+            .padding(.vertical, 12)
+            .background(Color.blue)
+            .cornerRadius(8)
             
             Button(ViewClientsLocalizationHelper.shared.localizedString(for: "tabbar.profile.create.order")) {
                 showCreateOrder = true
@@ -153,6 +164,11 @@ struct ProfileView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.gray.opacity(0.05))
+        .sheet(isPresented: $showCustomerRegistration) {
+            NavigationView {
+                moduleFactory.createCustomerRegistrationModule()
+            }
+        }
         .sheet(isPresented: $showCreateOrder) {
             NavigationView {
                 moduleFactory.createCreateOrderModule()
