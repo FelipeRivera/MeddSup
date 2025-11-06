@@ -16,17 +16,21 @@ public struct OrderStatusView: View {
     
     public var body: some View {
         NavigationView {
-            VStack(spacing: 0) {
-                // Header
-                headerView
+            ZStack {
+                DiagonalBackgroundView()
+                    .ignoresSafeArea()
                 
-                // Search Section
-                searchSection
-                
-                // Content
-                contentView
+                VStack(spacing: 0) {
+                    // Header
+                    headerView
+                    
+                    // Search Section
+                    searchSection
+                    
+                    // Content
+                    contentView
+                }
             }
-            .background(Color.gray.opacity(0.05))
             .navigationBarHidden(true)
         }
         .task {
@@ -243,6 +247,77 @@ struct RoundedCorner: Shape {
             cornerRadii: CGSize(width: radius, height: radius)
         )
         return Path(path.cgPath)
+    }
+}
+
+// MARK: - Diagonal Background View
+struct DiagonalBackgroundView: View {
+    var body: some View {
+        ZStack {
+            Rectangle()
+                .fill(
+                    LinearGradient(
+                        colors: [
+                            Color.teal.opacity(0.3),
+                            Color.teal.opacity(0.1)
+                        ],
+                        startPoint: .topLeading,
+                        endPoint: .center
+                    )
+                )
+                .overlay(
+                    DiagonalLinesPattern()
+                        .opacity(0.2)
+                )
+                .clipShape(
+                    TriangleShape()
+                        .rotation(.degrees(45))
+                )
+            Rectangle()
+                .fill(
+                    LinearGradient(
+                        colors: [
+                            Color.blue.opacity(0.2),
+                            Color(red: 0.1, green: 0.2, blue: 0.4).opacity(0.1)
+                        ],
+                        startPoint: .center,
+                        endPoint: .bottomTrailing
+                    )
+                )
+                .clipShape(
+                    TriangleShape()
+                        .rotation(.degrees(225))
+                )
+        }
+    }
+}
+
+struct DiagonalLinesPattern: View {
+    var body: some View {
+        GeometryReader { geometry in
+            Path { path in
+                let width = geometry.size.width
+                let height = geometry.size.height
+                let spacing: CGFloat = 8
+                
+                for i in stride(from: -width, through: width + height, by: spacing) {
+                    path.move(to: CGPoint(x: i, y: 0))
+                    path.addLine(to: CGPoint(x: i + height, y: height))
+                }
+            }
+            .stroke(Color.white.opacity(0.2), lineWidth: 1)
+        }
+    }
+}
+
+struct TriangleShape: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        path.move(to: CGPoint(x: rect.minX, y: rect.minY))
+        path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
+        path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
+        path.closeSubpath()
+        return path
     }
 }
 
