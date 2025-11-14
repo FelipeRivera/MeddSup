@@ -16,8 +16,8 @@ public struct CustomerRegistrationRequest: Codable, Sendable {
     public let mainContact: String
     
     enum CodingKeys: String, CodingKey {
-        case institutionName = "institution_name"
-        case taxId = "tax_id"
+        case institutionName = "name"
+        case taxId = "identifier"
         case address
         case country
         case mainContact = "main_contact"
