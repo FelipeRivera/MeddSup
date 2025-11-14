@@ -1,0 +1,36 @@
+/* 
+  Localizable.strings
+  customerRegistrationModule
+
+  Created by Felipe Rivera on 3/09/25.
+*/
+
+// MARK: - Title
+"customerregistration.title.line1" = "Registro de Cliente";
+"customerregistration.title.line2" = "Institucional";
+
+// MARK: - Form Fields
+"customerregistration.field.institution.name" = "Nombre de la Institución";
+"customerregistration.field.tax.id" = "Identificación Tributaria";
+"customerregistration.field.address" = "Dirección";
+"customerregistration.field.country" = "País";
+"customerregistration.field.main.contact" = "Contacto Principal";
+
+// MARK: - Placeholders
+"customerregistration.placeholder.enter.name" = "Ingrese nombre";
+"customerregistration.placeholder.enter.identification" = "Ingrese identificación";
+"customerregistration.placeholder.enter.address" = "Ingrese dirección";
+"customerregistration.placeholder.enter.country" = "Ingrese país";
+"customerregistration.placeholder.enter.main.contact" = "Ingrese contacto principal";
+
+// MARK: - Buttons
+"customerregistration.button.register" = "Registrar";
+"customerregistration.button.ok" = "Aceptar";
+"customerregistration.button.cancel" = "Cancelar";
+
+// MARK: - Messages
+"customerregistration.success.message" = "Cliente registrado exitosamente";
+"customerregistration.error.title" = "Error";
+"customerregistration.error.validation.empty.fields" = "Todos los campos son requeridos";
+"customerregistration.error.field.required" = "Este campo no puede estar vacío";
+

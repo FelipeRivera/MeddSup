@@ -16,17 +16,20 @@ public class ConfigurationManager: ObservableObject {
         public let portalBaseURL: String
         public let ordersAPIURL: String
         public let createOrderAPIURL: String
+        public let clientsAPIURL: String
         
         public init(
             authBaseURL: String = "http://52.55.197.150/auth",
             portalBaseURL: String = "http://portal-web-alb-701001447.us-east-1.elb.amazonaws.com",
             ordersAPIURL: String = "http://52.55.197.150/orders/api/orders",
-            createOrderAPIURL: String = "http://52.55.197.150/orders/api/orders"
+            createOrderAPIURL: String = "http://52.55.197.150/orders/api/orders",
+            clientsAPIURL: String = "http://52.55.197.150/managers/api/v1/clients"
         ) {
             self.authBaseURL = authBaseURL
             self.portalBaseURL = portalBaseURL
             self.ordersAPIURL = ordersAPIURL
             self.createOrderAPIURL = createOrderAPIURL
+            self.clientsAPIURL = clientsAPIURL
         }
     }
     
