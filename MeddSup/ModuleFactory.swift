@@ -11,6 +11,7 @@ import ViewClientsModule
 import OrderStatusModule
 import CreateOrderModule
 import customerRegistrationModule
+import VisitLogModule
 
 @MainActor
 public class ModuleFactory: ObservableObject {
@@ -77,6 +78,15 @@ public class ModuleFactory: ObservableObject {
             CustomerRegistrationModule.createCustomerRegistrationView(
                 baseURL: configuration.endpoints.clientsAPIURL,
                 token: token
+            )
+        )
+    }
+    
+    public func createVisitLogModule(commercialId: Int = 7) -> some View {
+        AnyView(
+            VisitLogModule.createRoutePlanningView(
+                baseURL: configuration.endpoints.visitsAPIURL,
+                commercialId: commercialId
             )
         )
     }
