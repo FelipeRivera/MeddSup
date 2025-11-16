@@ -6,11 +6,14 @@
 //
 
 import SwiftUI
+import UIKit
 
 public struct RoutePlanningView: View {
     @StateObject private var viewModel: VisitAgendaViewModel
     @State private var showClientSelector = false
     @State private var selectedVisit: Visit?
+    @State private var previousTableColor: UIColor?
+    @State private var previousCellColor: UIColor?
     
     private let localization = VisitLogLocalizationHelper.shared
     
@@ -20,35 +23,41 @@ public struct RoutePlanningView: View {
     
     public var body: some View {
         NavigationView {
-            List {
-                Section {
-                    planCard
-                }
-                .listRowInsets(EdgeInsets())
-                .listRowBackground(Color.clear)
+            ZStack {
+                VisitRouteBackgroundView()
+                    .ignoresSafeArea()
                 
-                VisitListView(
-                    visits: viewModel.plannedVisits,
-                    isSubmitting: viewModel.isSubmitting,
-                    onMove: viewModel.moveVisits,
-                    onDelete: viewModel.deleteVisits,
-                    onTap: { visit in
-                        selectedVisit = visit
-                    },
-                    onConfirm: {
-                        Task {
-                            await viewModel.submitAgenda()
-                        }
+                List {
+                    Section {
+                        planCard
                     }
-                )
-                
-                Section(
-                    header: Text(localization.localizedString(for: "visitroute.report.section.title"))
-                ) {
-                    reportSection
+                    .listRowInsets(EdgeInsets())
+                    .listRowBackground(Color.clear)
+                    
+                    VisitListView(
+                        visits: viewModel.plannedVisits,
+                        isSubmitting: viewModel.isSubmitting,
+                        onMove: viewModel.moveVisits,
+                        onDelete: viewModel.deleteVisits,
+                        onTap: { visit in
+                            selectedVisit = visit
+                        },
+                        onConfirm: {
+                            Task {
+                                await viewModel.submitAgenda()
+                            }
+                        }
+                    )
+                    
+                    Section(
+                        header: Text(localization.localizedString(for: "visitroute.report.section.title"))
+                    ) {
+                        reportSection
+                    }
                 }
+                .listStyle(.insetGrouped)
+                .modifier(VisitRouteListBackground())
             }
-            .listStyle(.insetGrouped)
             .navigationTitle(localization.localizedString(for: "visitroute.title"))
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -107,6 +116,26 @@ public struct RoutePlanningView: View {
                     }
                 }
             )
+        }
+        .onAppear {
+            guard #available(iOS 16.0, *) else {
+                if previousTableColor == nil {
+                    previousTableColor = UITableView.appearance().backgroundColor
+                }
+                if previousCellColor == nil {
+                    previousCellColor = UITableViewCell.appearance().backgroundColor
+                }
+                UITableView.appearance().backgroundColor = .clear
+                UITableViewCell.appearance().backgroundColor = .clear
+                return
+            }
+        }
+        .onDisappear {
+            guard #available(iOS 16.0, *) else {
+                UITableView.appearance().backgroundColor = previousTableColor
+                UITableViewCell.appearance().backgroundColor = previousCellColor
+                return
+            }
         }
     }
     
@@ -245,6 +274,88 @@ public struct RoutePlanningView: View {
         }
         .buttonStyle(.plain)
     }
+
+// MARK: - Background helpers
+private struct VisitRouteBackgroundView: View {
+    var body: some View {
+        ZStack {
+            Rectangle()
+                .fill(
+                    LinearGradient(
+                        colors: [
+                            Color.teal.opacity(0.3),
+                            Color.teal.opacity(0.1)
+                        ],
+                        startPoint: .topLeading,
+                        endPoint: .center
+                    )
+                )
+                .overlay(
+                    VisitRouteLinesPattern()
+                        .opacity(0.2)
+                )
+                .clipShape(
+                    VisitRouteTriangleShape()
+                        .rotation(.degrees(45))
+                )
+            
+            Rectangle()
+                .fill(
+                    LinearGradient(
+                        colors: [
+                            Color.blue.opacity(0.2),
+                            Color(red: 0.1, green: 0.2, blue: 0.4).opacity(0.1)
+                        ],
+                        startPoint: .center,
+                        endPoint: .bottomTrailing
+                    )
+                )
+                .clipShape(
+                    VisitRouteTriangleShape()
+                        .rotation(.degrees(225))
+                )
+        }
+    }
+}
+
+private struct VisitRouteTriangleShape: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        path.move(to: CGPoint(x: rect.minX, y: rect.minY))
+        path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
+        path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
+        path.closeSubpath()
+        return path
+    }
+}
+
+private struct VisitRouteLinesPattern: View {
+    var body: some View {
+        GeometryReader { geometry in
+            Path { path in
+                let width = geometry.size.width
+                let height = geometry.size.height
+                let spacing: CGFloat = 8
+                
+                for offset in stride(from: -width, through: width + height, by: spacing) {
+                    path.move(to: CGPoint(x: offset, y: 0))
+                    path.addLine(to: CGPoint(x: offset + height, y: height))
+                }
+            }
+            .stroke(Color.white.opacity(0.2), lineWidth: 1)
+        }
+    }
+}
+
+private struct VisitRouteListBackground: ViewModifier {
+    func body(content: Content) -> some View {
+        if #available(iOS 16.0, *) {
+            content.scrollContentBackground(.hidden)
+        } else {
+            content
+        }
+    }
+}
 }
 
 
