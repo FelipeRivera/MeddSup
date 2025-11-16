@@ -16,12 +16,14 @@ public protocol VisitServiceProtocol: Sendable {
 /// Concrete implementation that communicates with the backend REST service.
 public final class VisitService: @unchecked Sendable, VisitServiceProtocol {
     private let baseURL: URL
+    private let authToken: String
     private let urlSession: URLSession
     private let jsonEncoder: JSONEncoder
     private let jsonDecoder: JSONDecoder
     
-    public init(baseURL: String, urlSession: URLSession = .shared) {
+    public init(baseURL: String, token: String, urlSession: URLSession = .shared) {
         self.baseURL = URL(string: baseURL) ?? URL(string: "http://52.55.197.150/visits")!
+        self.authToken = token
         self.urlSession = urlSession
         
         self.jsonEncoder = JSONEncoder()
@@ -40,7 +42,11 @@ public final class VisitService: @unchecked Sendable, VisitServiceProtocol {
             throw VisitServiceError.invalidURL
         }
         
-        let (data, response) = try await urlSession.data(from: url)
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
+        
+        let (data, response) = try await urlSession.data(for: request)
         try validate(response: response, data: data)
         
         return try jsonDecoder.decode([VisitPayload].self, from: data)
@@ -50,6 +56,7 @@ public final class VisitService: @unchecked Sendable, VisitServiceProtocol {
         var request = URLRequest(url: baseURL)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
         request.httpBody = try jsonEncoder.encode(payload)
         
         let (data, response) = try await urlSession.data(for: request)

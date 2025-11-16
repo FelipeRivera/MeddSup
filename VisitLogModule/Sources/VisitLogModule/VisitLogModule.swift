@@ -12,9 +12,10 @@ public enum VisitLogModule {
     /// Provides the entry point for the Route Planning experience embedded in the MeddSup app.
     public static func createRoutePlanningView(
         baseURL: String,
+        token: String,
         commercialId: Int
     ) -> some View {
-        let service = VisitService(baseURL: baseURL)
+        let service = VisitService(baseURL: baseURL, token: token)
         let viewModel = VisitAgendaViewModel(
             service: service,
             commercialId: commercialId,

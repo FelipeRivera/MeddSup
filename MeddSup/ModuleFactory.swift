@@ -83,9 +83,14 @@ public class ModuleFactory: ObservableObject {
     }
     
     public func createVisitLogModule(commercialId: Int = 7) -> some View {
-        AnyView(
+        guard let session = configuration.userSession else {
+            return AnyView(EmptyView())
+        }
+        
+        return AnyView(
             VisitLogModule.createRoutePlanningView(
                 baseURL: configuration.endpoints.visitsAPIURL,
+                token: session.token,
                 commercialId: commercialId
             )
         )
