@@ -26,8 +26,8 @@ jobs:
         path: |
           ~/.cache/org.swift.swiftpm
           ~/Library/Caches/org.swift.swiftpm
-          .build
-        key: ${{ runner.os }}-spm-login-${{ hashFiles('LoginModule/Package.swift') }}
+          LoginModule/.build
+        key: ${{ runner.os }}-spm-login-module
         restore-keys: |
           ${{ runner.os }}-spm-
           
@@ -61,8 +61,8 @@ jobs:
         path: |
           ~/.cache/org.swift.swiftpm
           ~/Library/Caches/org.swift.swiftpm
-          .build
-        key: ${{ runner.os }}-spm-viewclients-${{ hashFiles('ViewClientsModule/Package.swift') }}
+          ViewClientsModule/.build
+        key: ${{ runner.os }}-spm-viewclients-module
         restore-keys: |
           ${{ runner.os }}-spm-
           
@@ -96,8 +96,8 @@ jobs:
         path: |
           ~/.cache/org.swift.swiftpm
           ~/Library/Caches/org.swift.swiftpm
-          .build
-        key: ${{ runner.os }}-spm-createorder-${{ hashFiles('CreateOrderModule/Package.swift') }}
+          CreateOrderModule/.build
+        key: ${{ runner.os }}-spm-createorder-module
         restore-keys: |
           ${{ runner.os }}-spm-
           
@@ -131,8 +131,8 @@ jobs:
         path: |
           ~/.cache/org.swift.swiftpm
           ~/Library/Caches/org.swift.swiftpm
-          .build
-        key: ${{ runner.os }}-spm-orderstatus-${{ hashFiles('OrderStatusModule/Package.swift') }}
+          OrderStatusModule/.build
+        key: ${{ runner.os }}-spm-orderstatus-module
         restore-keys: |
           ${{ runner.os }}-spm-
           
@@ -166,8 +166,8 @@ jobs:
         path: |
           ~/.cache/org.swift.swiftpm
           ~/Library/Caches/org.swift.swiftpm
-          .build
-        key: ${{ runner.os }}-spm-customerregistration-${{ hashFiles('customerRegistrationModule/Package.swift') }}
+          customerRegistrationModule/.build
+        key: ${{ runner.os }}-spm-customerregistration-module
         restore-keys: |
           ${{ runner.os }}-spm-
           
@@ -201,8 +201,8 @@ jobs:
         path: |
           ~/.cache/org.swift.swiftpm
           ~/Library/Caches/org.swift.swiftpm
-          .build
-        key: ${{ runner.os }}-spm-visitlog-${{ hashFiles('VisitLogModule/Package.swift') }}
+          VisitLogModule/.build
+        key: ${{ runner.os }}-spm-visitlog-module
         restore-keys: |
           ${{ runner.os }}-spm-
           
