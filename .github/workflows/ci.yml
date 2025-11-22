@@ -27,7 +27,7 @@ jobs:
           ~/.cache/org.swift.swiftpm
           ~/Library/Caches/org.swift.swiftpm
           .build
-        key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+        key: ${{ runner.os }}-spm-${{ hashFiles('MeddSup.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
         restore-keys: |
           ${{ runner.os }}-spm-
           
@@ -57,7 +57,7 @@ jobs:
           ~/.cache/org.swift.swiftpm
           ~/Library/Caches/org.swift.swiftpm
           .build
-        key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+        key: ${{ runner.os }}-spm-${{ hashFiles('MeddSup.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
         restore-keys: |
           ${{ runner.os }}-spm-
           
@@ -87,7 +87,7 @@ jobs:
           ~/.cache/org.swift.swiftpm
           ~/Library/Caches/org.swift.swiftpm
           .build
-        key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+        key: ${{ runner.os }}-spm-${{ hashFiles('MeddSup.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
         restore-keys: |
           ${{ runner.os }}-spm-
           
@@ -117,7 +117,7 @@ jobs:
           ~/.cache/org.swift.swiftpm
           ~/Library/Caches/org.swift.swiftpm
           .build
-        key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+        key: ${{ runner.os }}-spm-${{ hashFiles('MeddSup.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
         restore-keys: |
           ${{ runner.os }}-spm-
           
