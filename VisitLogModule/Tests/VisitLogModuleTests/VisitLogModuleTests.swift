@@ -1,6 +1,7 @@
 import Testing
 @testable import VisitLogModule
 
-@Test func example() async throws {
-    // Write your test here and use APIs like `#expect(...)` to check expected conditions.
-}
+// This file is kept for module-level tests if needed in the future.
+// Unit tests for business logic are in:
+// - VisitAgendaViewModelTests.swift
+// - VisitDetailViewModelTests.swift

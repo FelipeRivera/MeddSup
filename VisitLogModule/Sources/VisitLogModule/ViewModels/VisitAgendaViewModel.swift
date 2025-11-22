@@ -162,9 +162,10 @@ public final class VisitAgendaViewModel: ObservableObject {
         defer { isSubmitting = false }
         
         do {
-            for (index, visit) in plannedVisits.enumerated() {
+            for visit in plannedVisits {
+                let randomVisitID = Int.random(in: 1000...999999)
                 let payload = VisitPayload(
-                    visitID: index + 1000,
+                    visitID: randomVisitID,
                     commercialID: commercialId,
                     date: visit.plannedTime,
                     clientIDs: [visit.client.id]
