@@ -26,8 +26,8 @@ jobs:
         path: |
           ~/.cache/org.swift.swiftpm
           ~/Library/Caches/org.swift.swiftpm
-          LoginModule/.build
-        key: ${{ runner.os }}-spm-login-module
+          .build
+        key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
         restore-keys: |
           ${{ runner.os }}-spm-
           
@@ -35,7 +35,7 @@ jobs:
       run: |
         cd LoginModule
         rm -rf .build
-        xcodebuild test -scheme LoginModule -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.6'
+        swift test
 
   test-viewclients-module:
     name: Test ViewClientsModule
@@ -56,8 +56,8 @@ jobs:
         path: |
           ~/.cache/org.swift.swiftpm
           ~/Library/Caches/org.swift.swiftpm
-          ViewClientsModule/.build
-        key: ${{ runner.os }}-spm-viewclients-module
+          .build
+        key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
         restore-keys: |
           ${{ runner.os }}-spm-
           
@@ -86,8 +86,8 @@ jobs:
         path: |
           ~/.cache/org.swift.swiftpm
           ~/Library/Caches/org.swift.swiftpm
-          CreateOrderModule/.build
-        key: ${{ runner.os }}-spm-createorder-module
+          .build
+        key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
         restore-keys: |
           ${{ runner.os }}-spm-
           
@@ -116,8 +116,8 @@ jobs:
         path: |
           ~/.cache/org.swift.swiftpm
           ~/Library/Caches/org.swift.swiftpm
-          OrderStatusModule/.build
-        key: ${{ runner.os }}-spm-orderstatus-module
+          .build
+        key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
         restore-keys: |
           ${{ runner.os }}-spm-
           
@@ -125,7 +125,7 @@ jobs:
       run: |
         cd OrderStatusModule
         rm -rf .build
-        xcodebuild test -scheme OrderStatusModule -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.6'
+        swift test
 
   test-customer-registration-module:
     name: Test CustomerRegistrationModule
@@ -146,8 +146,8 @@ jobs:
         path: |
           ~/.cache/org.swift.swiftpm
           ~/Library/Caches/org.swift.swiftpm
-          customerRegistrationModule/.build
-        key: ${{ runner.os }}-spm-customerregistration-module
+          .build
+        key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
         restore-keys: |
           ${{ runner.os }}-spm-
           
@@ -176,8 +176,8 @@ jobs:
         path: |
           ~/.cache/org.swift.swiftpm
           ~/Library/Caches/org.swift.swiftpm
-          VisitLogModule/.build
-        key: ${{ runner.os }}-spm-visitlog-module
+          .build
+        key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
         restore-keys: |
           ${{ runner.os }}-spm-
           
@@ -185,4 +185,4 @@ jobs:
       run: |
         cd VisitLogModule
         rm -rf .build
-        xcodebuild test -scheme VisitLogModule -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.6'
+        swift test
