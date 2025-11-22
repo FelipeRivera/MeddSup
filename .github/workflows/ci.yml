@@ -31,11 +31,28 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-spm-
           
+    - name: List Available Simulators
+      id: simulator
+      run: |
+        xcrun simctl list devices available | grep -i "iPhone" | head -5
+        SIMULATOR_UUID=$(xcrun simctl list devices available | grep -i "iPhone" | head -1 | grep -oE '[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}' | head -1)
+        if [ -z "$SIMULATOR_UUID" ]; then
+          echo "No simulator found, listing all devices:"
+          xcrun simctl list devices
+          exit 1
+        fi
+        echo "simulator_uuid=$SIMULATOR_UUID" >> $GITHUB_OUTPUT
+        echo "Found simulator UUID: $SIMULATOR_UUID"
+        
+    - name: Boot iOS Simulator
+      run: |
+        xcrun simctl boot "${{ steps.simulator.outputs.simulator_uuid }}" || echo "Simulator already booted or boot failed"
+        
     - name: Test LoginModule
       run: |
         cd LoginModule
         rm -rf .build
-        swift test --enable-test-discovery 2>&1 || xcodebuild test -scheme LoginModule -sdk iphonesimulator -destination 'generic/platform=iOS Simulator'
+        xcodebuild test -scheme LoginModule -sdk iphonesimulator -destination "id=${{ steps.simulator.outputs.simulator_uuid }}"
 
   test-viewclients-module:
     name: Test ViewClientsModule
@@ -61,11 +78,28 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-spm-
           
+    - name: List Available Simulators
+      id: simulator
+      run: |
+        xcrun simctl list devices available | grep -i "iPhone" | head -5
+        SIMULATOR_UUID=$(xcrun simctl list devices available | grep -i "iPhone" | head -1 | grep -oE '[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}' | head -1)
+        if [ -z "$SIMULATOR_UUID" ]; then
+          echo "No simulator found, listing all devices:"
+          xcrun simctl list devices
+          exit 1
+        fi
+        echo "simulator_uuid=$SIMULATOR_UUID" >> $GITHUB_OUTPUT
+        echo "Found simulator UUID: $SIMULATOR_UUID"
+        
+    - name: Boot iOS Simulator
+      run: |
+        xcrun simctl boot "${{ steps.simulator.outputs.simulator_uuid }}" || echo "Simulator already booted or boot failed"
+        
     - name: Test ViewClientsModule
       run: |
         cd ViewClientsModule
         rm -rf .build
-        swift test --enable-test-discovery 2>&1 || xcodebuild test -scheme ViewClientsModule -sdk iphonesimulator -destination 'generic/platform=iOS Simulator'
+        xcodebuild test -scheme ViewClientsModule -sdk iphonesimulator -destination "id=${{ steps.simulator.outputs.simulator_uuid }}"
 
   test-create-order-module:
     name: Test CreateOrderModule
@@ -91,11 +125,28 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-spm-
           
+    - name: List Available Simulators
+      id: simulator
+      run: |
+        xcrun simctl list devices available | grep -i "iPhone" | head -5
+        SIMULATOR_UUID=$(xcrun simctl list devices available | grep -i "iPhone" | head -1 | grep -oE '[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}' | head -1)
+        if [ -z "$SIMULATOR_UUID" ]; then
+          echo "No simulator found, listing all devices:"
+          xcrun simctl list devices
+          exit 1
+        fi
+        echo "simulator_uuid=$SIMULATOR_UUID" >> $GITHUB_OUTPUT
+        echo "Found simulator UUID: $SIMULATOR_UUID"
+        
+    - name: Boot iOS Simulator
+      run: |
+        xcrun simctl boot "${{ steps.simulator.outputs.simulator_uuid }}" || echo "Simulator already booted or boot failed"
+        
     - name: Test CreateOrderModule
       run: |
         cd CreateOrderModule
         rm -rf .build
-        swift test --enable-test-discovery 2>&1 || xcodebuild test -scheme CreateOrderModule -sdk iphonesimulator -destination 'generic/platform=iOS Simulator'
+        xcodebuild test -scheme CreateOrderModule -sdk iphonesimulator -destination "id=${{ steps.simulator.outputs.simulator_uuid }}"
 
   test-order-status-module:
     name: Test OrderStatusModule
@@ -121,11 +172,28 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-spm-
           
+    - name: List Available Simulators
+      id: simulator
+      run: |
+        xcrun simctl list devices available | grep -i "iPhone" | head -5
+        SIMULATOR_UUID=$(xcrun simctl list devices available | grep -i "iPhone" | head -1 | grep -oE '[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}' | head -1)
+        if [ -z "$SIMULATOR_UUID" ]; then
+          echo "No simulator found, listing all devices:"
+          xcrun simctl list devices
+          exit 1
+        fi
+        echo "simulator_uuid=$SIMULATOR_UUID" >> $GITHUB_OUTPUT
+        echo "Found simulator UUID: $SIMULATOR_UUID"
+        
+    - name: Boot iOS Simulator
+      run: |
+        xcrun simctl boot "${{ steps.simulator.outputs.simulator_uuid }}" || echo "Simulator already booted or boot failed"
+        
     - name: Test OrderStatusModule
       run: |
         cd OrderStatusModule
         rm -rf .build
-        swift test --enable-test-discovery 2>&1 || xcodebuild test -scheme OrderStatusModule -sdk iphonesimulator -destination 'generic/platform=iOS Simulator'
+        xcodebuild test -scheme OrderStatusModule -sdk iphonesimulator -destination "id=${{ steps.simulator.outputs.simulator_uuid }}"
 
   test-customer-registration-module:
     name: Test CustomerRegistrationModule
@@ -151,11 +219,28 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-spm-
           
+    - name: List Available Simulators
+      id: simulator
+      run: |
+        xcrun simctl list devices available | grep -i "iPhone" | head -5
+        SIMULATOR_UUID=$(xcrun simctl list devices available | grep -i "iPhone" | head -1 | grep -oE '[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}' | head -1)
+        if [ -z "$SIMULATOR_UUID" ]; then
+          echo "No simulator found, listing all devices:"
+          xcrun simctl list devices
+          exit 1
+        fi
+        echo "simulator_uuid=$SIMULATOR_UUID" >> $GITHUB_OUTPUT
+        echo "Found simulator UUID: $SIMULATOR_UUID"
+        
+    - name: Boot iOS Simulator
+      run: |
+        xcrun simctl boot "${{ steps.simulator.outputs.simulator_uuid }}" || echo "Simulator already booted or boot failed"
+        
     - name: Test CustomerRegistrationModule
       run: |
         cd customerRegistrationModule
         rm -rf .build
-        swift test --enable-test-discovery 2>&1 || xcodebuild test -scheme customerRegistrationModule -sdk iphonesimulator -destination 'generic/platform=iOS Simulator'
+        xcodebuild test -scheme customerRegistrationModule -sdk iphonesimulator -destination "id=${{ steps.simulator.outputs.simulator_uuid }}"
 
   test-visit-log-module:
     name: Test VisitLogModule
@@ -181,8 +266,25 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-spm-
           
+    - name: List Available Simulators
+      id: simulator
+      run: |
+        xcrun simctl list devices available | grep -i "iPhone" | head -5
+        SIMULATOR_UUID=$(xcrun simctl list devices available | grep -i "iPhone" | head -1 | grep -oE '[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}' | head -1)
+        if [ -z "$SIMULATOR_UUID" ]; then
+          echo "No simulator found, listing all devices:"
+          xcrun simctl list devices
+          exit 1
+        fi
+        echo "simulator_uuid=$SIMULATOR_UUID" >> $GITHUB_OUTPUT
+        echo "Found simulator UUID: $SIMULATOR_UUID"
+        
+    - name: Boot iOS Simulator
+      run: |
+        xcrun simctl boot "${{ steps.simulator.outputs.simulator_uuid }}" || echo "Simulator already booted or boot failed"
+        
     - name: Test VisitLogModule
       run: |
         cd VisitLogModule
         rm -rf .build
-        swift test --enable-test-discovery 2>&1 || xcodebuild test -scheme VisitLogModule -sdk iphonesimulator -destination 'generic/platform=iOS Simulator'
+        xcodebuild test -scheme VisitLogModule -sdk iphonesimulator -destination "id=${{ steps.simulator.outputs.simulator_uuid }}"
