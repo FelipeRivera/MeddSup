@@ -126,3 +126,63 @@ jobs:
         cd OrderStatusModule
         rm -rf .build
         xcodebuild test -scheme OrderStatusModule -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.6'
+
+  test-customer-registration-module:
+    name: Test CustomerRegistrationModule
+    runs-on: macos-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Xcode
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: latest-stable
+        
+    - name: Cache Swift Package Manager
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cache/org.swift.swiftpm
+          ~/Library/Caches/org.swift.swiftpm
+          .build
+        key: ${{ runner.os }}-spm-customer-registration-module
+        restore-keys: |
+          ${{ runner.os }}-spm-
+          
+    - name: Test CustomerRegistrationModule
+      run: |
+        cd customerRegistrationModule
+        rm -rf .build
+        xcodebuild test -scheme customerRegistrationModule -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.6'
+
+  test-visit-log-module:
+    name: Test VisitLogModule
+    runs-on: macos-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Xcode
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: latest-stable
+        
+    - name: Cache Swift Package Manager
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cache/org.swift.swiftpm
+          ~/Library/Caches/org.swift.swiftpm
+          .build
+        key: ${{ runner.os }}-spm-visit-log-module
+        restore-keys: |
+          ${{ runner.os }}-spm-
+          
+    - name: Test VisitLogModule
+      run: |
+        cd VisitLogModule
+        rm -rf .build
+        xcodebuild test -scheme VisitLogModule -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.6'
