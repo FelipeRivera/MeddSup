@@ -10,6 +10,8 @@ import LoginModule
 import ViewClientsModule
 import OrderStatusModule
 import CreateOrderModule
+import customerRegistrationModule
+import VisitLogModule
 
 @MainActor
 public class ModuleFactory: ObservableObject {
@@ -63,6 +65,33 @@ public class ModuleFactory: ObservableObject {
             CreateOrderModule.createCreateOrderView(
                 baseURL: configuration.endpoints.createOrderAPIURL,
                 token: token
+            )
+        )
+    }
+    
+    public func createCustomerRegistrationModule() -> some View {
+        guard let token = CustomerRegistrationModule.getStoredToken() else {
+            return AnyView(EmptyView())
+        }
+        
+        return AnyView(
+            CustomerRegistrationModule.createCustomerRegistrationView(
+                baseURL: configuration.endpoints.clientsAPIURL,
+                token: token
+            )
+        )
+    }
+    
+    public func createVisitLogModule(commercialId: Int = 7) -> some View {
+        guard let session = configuration.userSession else {
+            return AnyView(EmptyView())
+        }
+        
+        return AnyView(
+            VisitLogModule.createRoutePlanningView(
+                baseURL: configuration.endpoints.visitsAPIURL,
+                token: session.token,
+                commercialId: commercialId
             )
         )
     }
