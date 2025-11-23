@@ -60,8 +60,8 @@ struct TabBarView: View {
                 }
                 .tag(TabItem.home)
             
-            // Search Tab - Placeholder
-            SearchView()
+            // Search Tab - Visit Log Module
+            moduleFactory.createVisitLogModule()
                 .tabItem {
                     Image(systemName: TabItem.search.systemImage)
                     Text(TabItem.search.title)
@@ -91,28 +91,6 @@ struct TabBarView: View {
 }
 
 // MARK: - Placeholder Views
-struct SearchView: View {
-    var body: some View {
-        VStack(spacing: 20) {
-            Image(systemName: "magnifyingglass")
-                .font(.system(size: 80))
-                .foregroundColor(.gray)
-            
-            Text(ViewClientsLocalizationHelper.shared.localizedString(for: "tabbar.search"))
-                .font(.title2)
-                .fontWeight(.semibold)
-            
-            Text(ViewClientsLocalizationHelper.shared.localizedString(for: "tabbar.search.description"))
-                .font(.body)
-                .foregroundColor(.secondary)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, 40)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.gray.opacity(0.05))
-    }
-}
-
 struct ProfileView: View {
     @EnvironmentObject private var configuration: ConfigurationManager
     @EnvironmentObject private var loginViewModel: LoginViewModel

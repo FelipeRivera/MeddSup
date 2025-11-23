@@ -14,6 +14,7 @@
 		8044E70E2E692DDD00AB4DEE /* RouteMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8044E70D2E692DDD00AB4DEE /* RouteMapKit */; };
 		8048D1752E9751CB0059E492 /* LoginModule in Frameworks */ = {isa = PBXBuildFile; productRef = 8048D1742E9751CB0059E492 /* LoginModule */; };
 		8064BE622EB2946100BE1CCA /* CreateOrderModule in Frameworks */ = {isa = PBXBuildFile; productRef = 8064BE612EB2946100BE1CCA /* CreateOrderModule */; };
+		806D34FC2EC944FB004EB53B /* VisitLogModule in Frameworks */ = {isa = PBXBuildFile; productRef = 806D34FB2EC944FB004EB53B /* VisitLogModule */; };
 		80DAEBB52EBD0A9F00446815 /* customerRegistrationModule in Frameworks */ = {isa = PBXBuildFile; productRef = 80DAEBB42EBD0A9F00446815 /* customerRegistrationModule */; };
 		80E112C22E99E33700819086 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 80E112C12E99E33700819086 /* FirebaseCore */; };
 		80E198B82E9DC8E800A5BC21 /* ViewClientsModule in Frameworks */ = {isa = PBXBuildFile; productRef = 80E198B72E9DC8E800A5BC21 /* ViewClientsModule */; };
@@ -42,6 +43,7 @@
 		8044E6EE2E692D3900AB4DEE /* MeddSupTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MeddSupTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8044E6F82E692D3900AB4DEE /* MeddSupUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MeddSupUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8048D16F2E974D270059E492 /* LoginModule */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LoginModule; sourceTree = SOURCE_ROOT; };
+		806D34F62EC93A48004EB53B /* VisitLogModule */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = VisitLogModule; sourceTree = SOURCE_ROOT; };
 		80B3D7132EB1527C00E1CA5F /* CreateOrderModule */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = CreateOrderModule; sourceTree = SOURCE_ROOT; };
 		80DAEBB32EBD053000446815 /* customerRegistrationModule */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = customerRegistrationModule; sourceTree = SOURCE_ROOT; };
 		80E198B42E9DC3F300A5BC21 /* ViewClientsModule */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ViewClientsModule; sourceTree = SOURCE_ROOT; };
@@ -89,6 +91,7 @@
 				803C44492E98A5A90074DAAF /* FirebasePerformance in Frameworks */,
 				8044E70E2E692DDD00AB4DEE /* RouteMapKit in Frameworks */,
 				80E85D652EA8668600773ADD /* OrderStatusModule in Frameworks */,
+				806D34FC2EC944FB004EB53B /* VisitLogModule in Frameworks */,
 				803C44412E98A5A90074DAAF /* FirebaseAnalyticsCore in Frameworks */,
 				80E198B82E9DC8E800A5BC21 /* ViewClientsModule in Frameworks */,
 				80E112C22E99E33700819086 /* FirebaseCore in Frameworks */,
@@ -147,6 +150,7 @@
 		8048D16E2E974C330059E492 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				806D34F62EC93A48004EB53B /* VisitLogModule */,
 				80DAEBB32EBD053000446815 /* customerRegistrationModule */,
 				80B3D7132EB1527C00E1CA5F /* CreateOrderModule */,
 				80E85D632EA8664F00773ADD /* OrderStatusModule */,
@@ -188,6 +192,7 @@
 				80E85D642EA8668600773ADD /* OrderStatusModule */,
 				8064BE612EB2946100BE1CCA /* CreateOrderModule */,
 				80DAEBB42EBD0A9F00446815 /* customerRegistrationModule */,
+				806D34FB2EC944FB004EB53B /* VisitLogModule */,
 			);
 			productName = MeddSup;
 			productReference = 8044E6DD2E692D3800AB4DEE /* MeddSup.app */;
@@ -750,6 +755,10 @@
 		8064BE612EB2946100BE1CCA /* CreateOrderModule */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CreateOrderModule;
+		};
+		806D34FB2EC944FB004EB53B /* VisitLogModule */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = VisitLogModule;
 		};
 		80DAEBB42EBD0A9F00446815 /* customerRegistrationModule */ = {
 			isa = XCSwiftPackageProductDependency;
